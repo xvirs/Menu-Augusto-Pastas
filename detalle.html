@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Plato - Augusto Pastas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="detalle-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">A</div>
+            <h1>AUGUSTO PASTAS</h1>
+            <p class="subtitle">DESDE EL 2011 • PASTAS FRESCAS Y COMIDAS 100% CASERAS</p>
+            <p class="location">COFICO</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <div class="detail-container">
+            <button class="back-button" onclick="window.history.back()">
+                <span>←</span> Volver al Menú
+            </button>
+
+            <div class="detail-card">
+                <div class="detail-header">
+                    <h1 class="dish-name" id="dishName">Nombre del Plato</h1>
+                    <span class="dish-category" id="dishCategory">Categoría</span>
+                </div>
+
+                <div class="detail-body">
+                    <div class="dish-image-placeholder" id="dishImage">
+                        <span class="image-icon">🍝</span>
+                    </div>
+
+                    <div class="dish-description" id="dishDescription">
+                        <p>Descripción detallada del plato...</p>
+                    </div>
+
+                    <div class="dish-ingredients" id="dishIngredients">
+                        <h3>Ingredientes</h3>
+                        <ul id="ingredientsList">
+                            <li>Ingrediente 1</li>
+                            <li>Ingrediente 2</li>
+                        </ul>
+                    </div>
+
+                    <div class="dish-info">
+                        <div class="info-item">
+                            <span class="info-label">Porción:</span>
+                            <span class="info-value" id="dishServing">1 persona</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Tipo:</span>
+                            <span class="info-value" id="dishType">Pasta fresca</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-footer">
+                    <div class="price-section">
+                        <span class="price-label">Precio</span>
+                        <span class="price-value" id="dishPrice">$0.000</span>
+                    </div>
+                    <button class="order-button">Consultar Disponibilidad</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Augusto Pastas - COFICO</p>
+        <p>Desde el 2011 • Pastas Frescas y Comidas 100% Caseras</p>
+    </footer>
+
+    <script src="menu-data.js"></script>
+    <script src="detalle.js"></script>
+</body>
+</html>
