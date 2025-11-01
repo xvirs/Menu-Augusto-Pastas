@@ -6,6 +6,8 @@
     --bg-light: #FFF;
     --bg-cream: #FFF8F0;
     --border-color: #E5E5E5;
+    /* Gradiente horizontal para header y nav */
+    --gradient-red: linear-gradient(90deg, var(--primary-red) 0%, var(--dark-red) 100%);
 }
 
 * {
@@ -22,9 +24,8 @@ body {
     font-size: 16px;
 }
 
-/* Header */
 .header {
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+    background: var(--gradient-red);
     color: white;
     text-align: center;
     padding: 3rem 1rem;
@@ -61,8 +62,6 @@ body {
     margin-bottom: 0.5rem;
     opacity: 0.95;
 }
-
-
 
 .instagram {
     display: inline-block;
@@ -111,7 +110,7 @@ body {
     flex-wrap: wrap;
     gap: 0.5rem;
     padding: 1.5rem 1rem;
-    background-color: white;
+    background: var(--gradient-red);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
@@ -120,8 +119,8 @@ body {
 
 .nav-btn {
     background-color: transparent;
-    color: var(--text-dark);
-    border: 2px solid var(--border-color);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
     padding: 0.7rem 1.5rem;
     font-size: 0.95rem;
     cursor: pointer;
@@ -131,15 +130,21 @@ body {
 }
 
 .nav-btn:hover {
-    background-color: var(--bg-cream);
-    border-color: var(--primary-red);
-    color: var(--primary-red);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: white;
 }
 
 .nav-btn.active {
-    background-color: var(--primary-red);
-    color: white;
-    border-color: var(--primary-red);
+    background-color: white;
+    color: var(--primary-red);
+    border-color: white;
+}
+
+.nav-btn:disabled,
+.nav-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 /* Main Content */
