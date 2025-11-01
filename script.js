@@ -5,6 +5,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     navButtons.forEach(button => {
         button.addEventListener('click', function() {
+            // Clear search when navigating to a different section
+            const searchInput = document.getElementById('menuSearch');
+            if (searchInput && searchInput.value) {
+                searchInput.value = '';
+                const clearButton = document.getElementById('clearSearch');
+                if (clearButton) {
+                    clearButton.style.display = 'none';
+                }
+                clearSearch();
+            }
+
             // Remove active class from all buttons
             navButtons.forEach(btn => btn.classList.remove('active'));
 
@@ -241,18 +252,6 @@ function performSearch(searchTerm) {
     } else {
         removeNoResults();
     }
-
-    // Disable navigation during search
-    const navButtons = document.querySelectorAll('.nav-btn');
-    navButtons.forEach(btn => {
-        if (searchTerm) {
-            btn.disabled = true;
-            btn.classList.add('disabled');
-        } else {
-            btn.disabled = false;
-            btn.classList.remove('disabled');
-        }
-    });
 }
 
 function clearSearch() {
@@ -263,26 +262,19 @@ function clearSearch() {
         itemName.innerHTML = itemName.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
     });
 
-    // Show only the first section
-    const sections = document.querySelectorAll('.menu-section');
-    sections.forEach((section, index) => {
-        if (index === 0) {
-            section.classList.add('active');
-        } else {
-            section.classList.remove('active');
-        }
-    });
-
-    // Reset navigation
-    document.querySelectorAll('.nav-btn').forEach((btn, index) => {
-        btn.disabled = false;
-        btn.classList.remove('disabled');
-        if (index === 0) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
+    // Show only the currently active section (don't force first section)
+    const activeButton = document.querySelector('.nav-btn.active');
+    if (activeButton) {
+        const sectionId = activeButton.getAttribute('data-section');
+        const sections = document.querySelectorAll('.menu-section');
+        sections.forEach(section => {
+            if (section.id === sectionId) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+    }
 
     removeNoResults();
 }

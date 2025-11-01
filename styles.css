@@ -123,13 +123,6 @@ body {
     border-color: var(--primary-red);
 }
 
-.nav-btn:disabled,
-.nav-btn.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
 /* Main Content */
 .main-content {
     max-width: 900px;
