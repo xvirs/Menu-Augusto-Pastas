@@ -1,4 +1,4 @@
-// Debounce function
+// Utility functions
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -11,103 +11,59 @@ function debounce(func, wait) {
     };
 }
 
-// Navigation functionality
-document.addEventListener('DOMContentLoaded', function() {
+// Navigation
+function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn');
     const sections = document.querySelectorAll('.menu-section');
 
     navButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Clear search when navigating to a different section
-            const searchInput = document.getElementById('menuSearch');
-            if (searchInput && searchInput.value) {
-                searchInput.value = '';
-                const clearButton = document.getElementById('clearSearch');
-                if (clearButton) {
-                    clearButton.style.display = 'none';
-                }
-                clearSearch();
-            }
-
-            // Remove active class from all buttons and update aria-pressed
-            navButtons.forEach(btn => {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-pressed', 'false');
-            });
-
-            // Add active class to clicked button and update aria-pressed
-            this.classList.add('active');
-            this.setAttribute('aria-pressed', 'true');
-
-            // Hide all sections
-            sections.forEach(section => section.classList.remove('active'));
-
-            // Show selected section
-            const sectionId = this.getAttribute('data-section');
-            const targetSection = document.getElementById(sectionId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-
-                // Smooth scroll to top of section
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
+            handleNavigation(this, navButtons, sections);
         });
     });
 
-    // Add smooth scroll behavior for better UX
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
+    initKeyboardNavigation(navButtons);
+}
 
-    // Add hover effect and click functionality to menu items
-    const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
-        const itemName = item.querySelector('.item-name');
-        if (itemName) {
-            const dishName = itemName.childNodes[0].textContent.trim();
-            const slug = generateSlug(dishName);
+function handleNavigation(clickedButton, allButtons, allSections) {
+    clearSearchOnNavigation();
+    updateButtonStates(allButtons, clickedButton);
+    updateSectionVisibility(allSections, clickedButton);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-            // Check if dish exists in menuData
-            const hasDetailPage = typeof menuData !== 'undefined' && menuData[slug];
-
-            if (hasDetailPage) {
-                // Item with detail page
-                item.style.cursor = 'pointer';
-                item.classList.add('has-detail');
-
-                item.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateX(5px)';
-                });
-
-                item.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateX(0)';
-                });
-
-                // Add click event to navigate to detail page
-                item.addEventListener('click', function() {
-                    window.location.href = `detalle.html?plato=${slug}`;
-                });
-            } else {
-                // Item without detail page (sauces, drinks, etc.)
-                item.classList.add('no-detail');
-                item.style.cursor = 'default';
-            }
+function clearSearchOnNavigation() {
+    const searchInput = document.getElementById('menuSearch');
+    if (searchInput && searchInput.value) {
+        searchInput.value = '';
+        const clearButton = document.getElementById('clearSearch');
+        if (clearButton) {
+            clearButton.style.display = 'none';
         }
-    });
+        clearSearch();
+    }
+}
 
-    // Add keyboard navigation
+function updateButtonStates(buttons, activeButton) {
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+    });
+    activeButton.classList.add('active');
+    activeButton.setAttribute('aria-pressed', 'true');
+}
+
+function updateSectionVisibility(sections, activeButton) {
+    sections.forEach(section => section.classList.remove('active'));
+
+    const sectionId = activeButton.getAttribute('data-section');
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+}
+
+function initKeyboardNavigation(navButtons) {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
             const activeButton = document.querySelector('.nav-btn.active');
@@ -124,14 +80,57 @@ document.addEventListener('DOMContentLoaded', function() {
             buttons[nextIndex].click();
         }
     });
+}
 
-    // Add search functionality
-    addSearchFeature();
-});
+// Menu Items
+function initMenuItems() {
+    const menuItems = document.querySelectorAll('.menu-item');
 
-// Search functionality
-function addSearchFeature() {
-    // Create search container
+    menuItems.forEach(item => {
+        const itemName = item.querySelector('.item-name');
+        if (!itemName) return;
+
+        const dishName = itemName.childNodes[0].textContent.trim();
+        const slug = generateSlug(dishName);
+        const hasDetailPage = typeof menuData !== 'undefined' && menuData[slug];
+
+        if (hasDetailPage) {
+            setupClickableItem(item, slug);
+        } else {
+            setupNonClickableItem(item);
+        }
+    });
+}
+
+function setupClickableItem(item, slug) {
+    item.style.cursor = 'pointer';
+    item.classList.add('has-detail');
+
+    item.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateX(5px)';
+    });
+
+    item.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateX(0)';
+    });
+
+    item.addEventListener('click', function() {
+        window.location.href = `detalle.html?plato=${slug}`;
+    });
+}
+
+function setupNonClickableItem(item) {
+    item.classList.add('no-detail');
+    item.style.cursor = 'default';
+}
+
+// Search
+function initSearch() {
+    createSearchContainer();
+    setupSearchListeners();
+}
+
+function createSearchContainer() {
     const searchContainer = document.createElement('div');
     searchContainer.className = 'search-container';
     searchContainer.setAttribute('role', 'search');
@@ -142,85 +141,14 @@ function addSearchFeature() {
                 aria-label="Limpiar búsqueda">✕</button>
     `;
 
-    // Add styles for search
-    const style = document.createElement('style');
-    style.textContent = `
-        .search-container {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 1rem 3rem 1rem 1rem;
-            font-size: 1.05rem;
-            border: 2px solid var(--border-color);
-            border-radius: 25px;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .search-input:focus {
-            border-color: var(--primary-red);
-        }
-
-        .clear-search {
-            position: absolute;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-light);
-            padding: 0.5rem;
-        }
-
-        .clear-search:hover {
-            color: var(--primary-red);
-        }
-
-        .highlight {
-            background-color: #ffeb3b;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
-            font-style: italic;
-        }
-
-        @media (max-width: 768px) {
-            .search-container {
-                padding: 0.5rem;
-            }
-
-            .search-input {
-                font-size: 1rem;
-                padding: 1rem 2.8rem 1rem 1rem;
-            }
-
-            .clear-search {
-                right: 1.5rem;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Insert search before main content
     const mainContent = document.querySelector('.main-content');
     mainContent.parentNode.insertBefore(searchContainer, mainContent);
+}
 
+function setupSearchListeners() {
     const searchInput = document.getElementById('menuSearch');
     const clearButton = document.getElementById('clearSearch');
 
-    // Debounced search function
     const debouncedSearch = debounce((searchTerm) => {
         performSearch(searchTerm);
     }, 300);
@@ -254,52 +182,60 @@ function performSearch(searchTerm) {
         let sectionHasResults = false;
 
         items.forEach(item => {
-            const itemName = item.querySelector('.item-name');
-            const itemDescription = item.querySelector('.item-description');
-
-            // Buscar en nombre, descripción e ingredientes
-            const nameText = itemName.textContent.toLowerCase();
-            const descriptionText = itemDescription ? itemDescription.textContent.toLowerCase() : '';
-            const combinedText = nameText + ' ' + descriptionText;
-
-            if (combinedText.includes(searchTerm)) {
+            if (itemMatchesSearch(item, searchTerm)) {
                 item.style.display = 'flex';
                 sectionHasResults = true;
                 hasResults = true;
-
-                // Highlight matching text in name
-                const regex = new RegExp(`(${searchTerm})`, 'gi');
-                const originalHTML = itemName.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
-                itemName.innerHTML = originalHTML.replace(regex, '<span class="highlight">$1</span>');
+                highlightSearchTerm(item, searchTerm);
             } else {
                 item.style.display = 'none';
             }
         });
 
-        if (sectionHasResults) {
-            section.classList.add('active');
-        } else {
-            section.classList.remove('active');
-        }
+        updateSectionVisibilityForSearch(section, sectionHasResults);
     });
 
-    // Show "no results" message if needed
-    if (!hasResults) {
-        showNoResults();
+    toggleNoResultsMessage(hasResults);
+}
+
+function itemMatchesSearch(item, searchTerm) {
+    const itemName = item.querySelector('.item-name');
+    const itemDescription = item.querySelector('.item-description');
+
+    const nameText = itemName.textContent.toLowerCase();
+    const descriptionText = itemDescription ? itemDescription.textContent.toLowerCase() : '';
+    const combinedText = nameText + ' ' + descriptionText;
+
+    return combinedText.includes(searchTerm);
+}
+
+function highlightSearchTerm(item, searchTerm) {
+    const itemName = item.querySelector('.item-name');
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    const originalHTML = itemName.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
+    itemName.innerHTML = originalHTML.replace(regex, '<span class="highlight">$1</span>');
+}
+
+function updateSectionVisibilityForSearch(section, hasResults) {
+    if (hasResults) {
+        section.classList.add('active');
     } else {
-        removeNoResults();
+        section.classList.remove('active');
     }
 }
 
 function clearSearch() {
-    // Remove highlights
     document.querySelectorAll('.menu-item').forEach(item => {
         item.style.display = 'flex';
         const itemName = item.querySelector('.item-name');
         itemName.innerHTML = itemName.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
     });
 
-    // Show only the currently active section (don't force first section)
+    restoreActiveSection();
+    removeNoResults();
+}
+
+function restoreActiveSection() {
     const activeButton = document.querySelector('.nav-btn.active');
     if (activeButton) {
         const sectionId = activeButton.getAttribute('data-section');
@@ -312,8 +248,14 @@ function clearSearch() {
             }
         });
     }
+}
 
-    removeNoResults();
+function toggleNoResultsMessage(hasResults) {
+    if (!hasResults) {
+        showNoResults();
+    } else {
+        removeNoResults();
+    }
 }
 
 function showNoResults() {
@@ -332,20 +274,22 @@ function removeNoResults() {
     }
 }
 
-// Add scroll to top button
-window.addEventListener('scroll', function() {
-    const scrollButton = document.getElementById('scrollToTop');
-    if (!scrollButton) {
-        createScrollButton();
-    }
+// Scroll to top button
+function initScrollToTop() {
+    window.addEventListener('scroll', function() {
+        const scrollButton = document.getElementById('scrollToTop');
+        if (!scrollButton) {
+            createScrollButton();
+        }
 
-    const button = document.getElementById('scrollToTop');
-    if (window.pageYOffset > 300) {
-        button.style.display = 'block';
-    } else {
-        button.style.display = 'none';
-    }
-});
+        const button = document.getElementById('scrollToTop');
+        if (window.pageYOffset > 300) {
+            button.style.display = 'block';
+        } else {
+            button.style.display = 'none';
+        }
+    });
+}
 
 function createScrollButton() {
     const button = document.createElement('button');
@@ -370,10 +314,7 @@ function createScrollButton() {
     `;
 
     button.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     button.addEventListener('mouseenter', function() {
@@ -387,23 +328,22 @@ function createScrollButton() {
     document.body.appendChild(button);
 }
 
-// Add fade-in animation on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Animations
+function initAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
 
-// Observe menu items for fade-in effect
-document.addEventListener('DOMContentLoaded', function() {
     const items = document.querySelectorAll('.menu-item');
     items.forEach(item => {
         item.style.opacity = '0';
@@ -411,4 +351,29 @@ document.addEventListener('DOMContentLoaded', function() {
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observer.observe(item);
     });
+}
+
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Initialization
+document.addEventListener('DOMContentLoaded', function() {
+    initNavigation();
+    initMenuItems();
+    initSearch();
+    initScrollToTop();
+    initAnimations();
+    initSmoothScroll();
 });

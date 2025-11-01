@@ -14,60 +14,11 @@
     box-sizing: border-box;
 }
 
-.logo {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto 1rem;
-}
-.header {
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
-    color: white;
-    text-align: center;
-    padding: 3rem 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Estilos generales para decoraciones */
-.header-decoration {
-    position: absolute;
-    top: 0;
-    opacity: 0.2;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Decoración izquierda */
-.header-decoration-left {
-    left: 0;
-}
-
-/* Decoración derecha */
-.header-decoration-right {
-    right: 0;
-}
-
-.decoration-img {
-    width: 250px;
-    height: auto;
-    display: block;
-}
-
-.header-content {
-    position: relative;
-    z-index: 1;
-}
-
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-dark);
     line-height: 1.6;
     background-color: var(--bg-cream);
-    /* Tamaño base recomendado para móviles */
     font-size: 16px;
 }
 
@@ -78,20 +29,23 @@ body {
     text-align: center;
     padding: 3rem 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .header-content {
     max-width: 600px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .logo {
-    font-size: 5rem;
-    font-weight: 300;
-    font-family: Georgia, serif;
-    letter-spacing: 0.5rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 1rem;
 }
 
 .header h1 {
@@ -131,6 +85,28 @@ body {
     background-color: white;
     color: var(--primary-red);
     transform: scale(1.05);
+}
+
+.header-decoration {
+    position: absolute;
+    top: 0;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.header-decoration-left {
+    left: 0;
+}
+
+.header-decoration-right {
+    right: 0;
+}
+
+.decoration-img {
+    width: 250px;
+    height: auto;
+    display: block;
 }
 
 /* Navigation */
@@ -237,6 +213,19 @@ body {
     font-size: 1.05rem;
 }
 
+.aperitivo-desc {
+    font-style: italic;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: var(--bg-cream);
+    border-left: 4px solid var(--primary-red);
+    border-radius: 4px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* Sauces */
 .basic-sauces {
     display: flex;
     flex-wrap: wrap;
@@ -253,18 +242,6 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 20px;
     font-size: 1rem;
-}
-
-.aperitivo-desc {
-    font-style: italic;
-    color: var(--text-light);
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background-color: var(--bg-cream);
-    border-left: 4px solid var(--primary-red);
-    border-radius: 4px;
-    font-size: 1.05rem;
-    line-height: 1.7;
 }
 
 /* Menu Items */
@@ -284,7 +261,10 @@ body {
     position: relative;
 }
 
-/* Items with detail page - clickeable */
+.menu-item:last-child {
+    border-bottom: none;
+}
+
 .menu-item.has-detail {
     cursor: pointer;
 }
@@ -312,17 +292,12 @@ body {
     transform: translateX(0);
 }
 
-/* Items without detail page - not clickeable */
 .menu-item.no-detail {
     cursor: default;
 }
 
 .menu-item.no-detail:hover {
     background-color: transparent;
-}
-
-.menu-item:last-child {
-    border-bottom: none;
 }
 
 .item-name {
@@ -366,14 +341,10 @@ body {
     font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* Responsive - Tablet */
 @media (max-width: 768px) {
     .header h1 {
         font-size: 1.6rem;
-    }
-
-    .logo {
-        font-size: 3.5rem;
     }
 
     .location {
@@ -434,14 +405,10 @@ body {
     }
 }
 
+/* Responsive - Mobile */
 @media (max-width: 480px) {
     .header {
         padding: 2rem 1rem;
-    }
-
-    .logo {
-        font-size: 3rem;
-        letter-spacing: 0.3rem;
     }
 
     .header h1 {
@@ -475,7 +442,7 @@ body {
     }
 }
 
-/* Print Styles */
+/* Print */
 @media print {
     .nav-menu {
         display: none;
