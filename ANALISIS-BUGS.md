@@ -1,3 +1,5 @@
+Para el adriel
+
 # Análisis de Bugs y Mejoras - Menú Augusto Pastas
 
 ## 🔴 BUGS CRÍTICOS
