@@ -448,7 +448,7 @@ function generateSlug(name) {
     return name
         .toLowerCase()
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Eliminar acentos
-        .replace(/[^a-z0-9\s-]/g, '') // Eliminar caracteres especiales
+        .replace(/[^a-z0-9ñ\s-]/g, '') // Eliminar caracteres especiales (preserva ñ)
         .trim()
         .replace(/\s+/g, '-'); // Reemplazar espacios por guiones
 }

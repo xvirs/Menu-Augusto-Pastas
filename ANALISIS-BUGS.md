@@ -13,27 +13,20 @@
 
 ---
 
+## ✅ COMPLETADO (continuación)
+
+### Media Prioridad
+1. ✅ Función generateSlug preserva "ñ"
+2. ✅ Buscador busca en nombres y descripciones
+3. ✅ Debounce agregado al buscador (300ms)
+4. ✅ Accesibilidad básica (ARIA, roles semánticos)
+5. ✅ SEO básico (meta tags, Open Graph, favicon)
+
+---
+
 ## 🟡 PENDIENTE - Media Prioridad
 
-### 1. Inconsistencia en función generateSlug
-- **Problema:** Elimina caracteres como "ñ" → "n"
-- **Archivo:** [menu-data.js](menu-data.js)
-
-### 2. Buscador solo busca en nombres
-- **Problema:** No busca en descripciones ni ingredientes
-- **Archivo:** [script.js](script.js)
-
-### 3. Debounce en buscador
-- **Problema:** Busca en cada tecla, podría ser más eficiente
-
-### 4. Accesibilidad básica
-- Atributos ARIA en navegación
-- Roles semánticos en botones
-
-### 5. SEO básico
-- Meta description
-- Open Graph tags
-- Favicon
+(No hay tareas pendientes de media prioridad)
 
 ---
 

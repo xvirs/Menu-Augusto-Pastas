@@ -1,3 +1,16 @@
+// Debounce function
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // Navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
     const navButtons = document.querySelectorAll('.nav-btn');
@@ -16,11 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearSearch();
             }
 
-            // Remove active class from all buttons
-            navButtons.forEach(btn => btn.classList.remove('active'));
+            // Remove active class from all buttons and update aria-pressed
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-pressed', 'false');
+            });
 
-            // Add active class to clicked button
+            // Add active class to clicked button and update aria-pressed
             this.classList.add('active');
+            this.setAttribute('aria-pressed', 'true');
 
             // Hide all sections
             sections.forEach(section => section.classList.remove('active'));
@@ -117,9 +134,12 @@ function addSearchFeature() {
     // Create search container
     const searchContainer = document.createElement('div');
     searchContainer.className = 'search-container';
+    searchContainer.setAttribute('role', 'search');
     searchContainer.innerHTML = `
-        <input type="text" id="menuSearch" placeholder="Buscar en el menú..." class="search-input">
-        <button id="clearSearch" class="clear-search" style="display: none;">✕</button>
+        <input type="text" id="menuSearch" placeholder="Buscar en el menú..." class="search-input"
+               aria-label="Buscar platos en el menú" role="searchbox">
+        <button id="clearSearch" class="clear-search" style="display: none;"
+                aria-label="Limpiar búsqueda">✕</button>
     `;
 
     // Add styles for search
@@ -200,12 +220,17 @@ function addSearchFeature() {
     const searchInput = document.getElementById('menuSearch');
     const clearButton = document.getElementById('clearSearch');
 
+    // Debounced search function
+    const debouncedSearch = debounce((searchTerm) => {
+        performSearch(searchTerm);
+    }, 300);
+
     searchInput.addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase().trim();
 
         if (searchTerm.length > 0) {
             clearButton.style.display = 'block';
-            performSearch(searchTerm);
+            debouncedSearch(searchTerm);
         } else {
             clearButton.style.display = 'none';
             clearSearch();
@@ -230,14 +255,19 @@ function performSearch(searchTerm) {
 
         items.forEach(item => {
             const itemName = item.querySelector('.item-name');
-            const text = itemName.textContent.toLowerCase();
+            const itemDescription = item.querySelector('.item-description');
 
-            if (text.includes(searchTerm)) {
+            // Buscar en nombre, descripción e ingredientes
+            const nameText = itemName.textContent.toLowerCase();
+            const descriptionText = itemDescription ? itemDescription.textContent.toLowerCase() : '';
+            const combinedText = nameText + ' ' + descriptionText;
+
+            if (combinedText.includes(searchTerm)) {
                 item.style.display = 'flex';
                 sectionHasResults = true;
                 hasResults = true;
 
-                // Highlight matching text
+                // Highlight matching text in name
                 const regex = new RegExp(`(${searchTerm})`, 'gi');
                 const originalHTML = itemName.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
                 itemName.innerHTML = originalHTML.replace(regex, '<span class="highlight">$1</span>');
