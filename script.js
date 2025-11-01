@@ -211,20 +211,32 @@ function itemMatchesSearch(item, searchTerm) {
 
 function highlightSearchTerm(item, searchTerm) {
     const itemName = item.querySelector('.item-name');
+
+    // First, remove any existing highlight wrapper
+    const existingWrapper = itemName.querySelector('span[style*="inline"]');
+    let text;
+
+    if (existingWrapper) {
+        // If there's already a wrapper, get the clean text from it
+        text = existingWrapper.textContent.trim();
+        const textNode = document.createTextNode(text);
+        itemName.replaceChild(textNode, existingWrapper);
+    }
+
+    // Now get the first text node
     const firstTextNode = itemName.childNodes[0];
 
     if (firstTextNode && firstTextNode.nodeType === Node.TEXT_NODE) {
-        const text = firstTextNode.textContent;
+        text = firstTextNode.textContent.trim();
         const regex = new RegExp(`(${searchTerm})`, 'gi');
         const highlighted = text.replace(regex, '<span class="highlight">$1</span>');
 
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = highlighted;
+        // Wrap in a span to keep inline
+        const wrapper = document.createElement('span');
+        wrapper.innerHTML = highlighted;
+        wrapper.style.display = 'inline';
 
-        while (tempDiv.firstChild) {
-            itemName.insertBefore(tempDiv.firstChild, firstTextNode);
-        }
-        itemName.removeChild(firstTextNode);
+        itemName.replaceChild(wrapper, firstTextNode);
     }
 }
 
@@ -241,12 +253,19 @@ function clearSearch() {
         item.style.display = 'flex';
         const itemName = item.querySelector('.item-name');
 
-        // Remove all highlight spans
-        const highlights = itemName.querySelectorAll('.highlight');
-        highlights.forEach(span => {
-            const textNode = document.createTextNode(span.textContent);
-            span.parentNode.replaceChild(textNode, span);
-        });
+        // Find wrapper span with highlights
+        const wrapper = itemName.querySelector('span[style*="inline"]');
+        if (wrapper) {
+            const textNode = document.createTextNode(wrapper.textContent);
+            itemName.replaceChild(textNode, wrapper);
+        } else {
+            // Fallback: remove highlight spans
+            const highlights = itemName.querySelectorAll('.highlight');
+            highlights.forEach(span => {
+                const textNode = document.createTextNode(span.textContent);
+                span.parentNode.replaceChild(textNode, span);
+            });
+        }
 
         // Normalize text nodes
         itemName.normalize();
