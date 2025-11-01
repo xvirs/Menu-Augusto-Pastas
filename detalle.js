@@ -65,10 +65,12 @@ function showErrorMessage() {
     const detailContainer = document.querySelector('.detail-container');
     detailContainer.innerHTML = `
         <div class="error-message">
+            <div class="error-icon">🍝</div>
             <h2>Plato no encontrado</h2>
             <p>Lo sentimos, no pudimos encontrar el plato que estás buscando.</p>
+            <p class="error-hint">Es posible que este plato no tenga información detallada disponible en este momento.</p>
             <button class="back-button" onclick="window.location.href='index.html'">
-                Volver al Menú
+                <span>←</span> Volver al Menú
             </button>
         </div>
     `;

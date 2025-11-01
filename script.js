@@ -57,30 +57,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add hover effect and click functionality to menu items
     const menuItems = document.querySelectorAll('.menu-item');
     menuItems.forEach(item => {
-        // Add cursor pointer
-        item.style.cursor = 'pointer';
+        const itemName = item.querySelector('.item-name');
+        if (itemName) {
+            const dishName = itemName.childNodes[0].textContent.trim();
+            const slug = generateSlug(dishName);
 
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(5px)';
-        });
+            // Check if dish exists in menuData
+            const hasDetailPage = typeof menuData !== 'undefined' && menuData[slug];
 
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateX(0)';
-        });
+            if (hasDetailPage) {
+                // Item with detail page
+                item.style.cursor = 'pointer';
+                item.classList.add('has-detail');
 
-        // Add click event to navigate to detail page
-        item.addEventListener('click', function() {
-            const itemName = this.querySelector('.item-name');
-            if (itemName) {
-                const dishName = itemName.childNodes[0].textContent.trim();
-                const slug = generateSlug(dishName);
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                });
 
-                // Check if dish exists in menuData
-                if (typeof menuData !== 'undefined' && menuData[slug]) {
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+
+                // Add click event to navigate to detail page
+                item.addEventListener('click', function() {
                     window.location.href = `detalle.html?plato=${slug}`;
-                }
+                });
+            } else {
+                // Item without detail page (sauces, drinks, etc.)
+                item.classList.add('no-detail');
+                item.style.cursor = 'default';
             }
-        });
+        }
     });
 
     // Add keyboard navigation

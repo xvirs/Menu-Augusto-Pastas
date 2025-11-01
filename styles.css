@@ -234,10 +234,14 @@ body {
     border-bottom: 1px solid var(--border-color);
     transition: all 0.3s ease;
     position: relative;
+}
+
+/* Items with detail page - clickeable */
+.menu-item.has-detail {
     cursor: pointer;
 }
 
-.menu-item::after {
+.menu-item.has-detail::after {
     content: '→';
     position: absolute;
     right: 1rem;
@@ -249,15 +253,24 @@ body {
     transform: translateX(-10px);
 }
 
-.menu-item:hover {
+.menu-item.has-detail:hover {
     background-color: var(--bg-cream);
     border-radius: 8px;
     padding-right: 3rem;
 }
 
-.menu-item:hover::after {
+.menu-item.has-detail:hover::after {
     opacity: 1;
     transform: translateX(0);
+}
+
+/* Items without detail page - not clickeable */
+.menu-item.no-detail {
+    cursor: default;
+}
+
+.menu-item.no-detail:hover {
+    background-color: transparent;
 }
 
 .menu-item:last-child {
