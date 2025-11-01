@@ -38,4 +38,4 @@ Instagram: [@augustopastas](https://instagram.com/augustopastas)
 
 ## 📄 Licencia
 
-© 2025 Augusto Pastas - COFICO
+© 2011-2025 Augusto Pastas - COFICO
