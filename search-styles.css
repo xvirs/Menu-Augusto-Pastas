@@ -40,6 +40,7 @@
     background-color: #ffeb3b;
     padding: 2px 4px;
     border-radius: 3px;
+    display: inline;
 }
 
 .no-results {

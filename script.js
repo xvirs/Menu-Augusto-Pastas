@@ -211,9 +211,21 @@ function itemMatchesSearch(item, searchTerm) {
 
 function highlightSearchTerm(item, searchTerm) {
     const itemName = item.querySelector('.item-name');
-    const regex = new RegExp(`(${searchTerm})`, 'gi');
-    const originalHTML = itemName.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
-    itemName.innerHTML = originalHTML.replace(regex, '<span class="highlight">$1</span>');
+    const firstTextNode = itemName.childNodes[0];
+
+    if (firstTextNode && firstTextNode.nodeType === Node.TEXT_NODE) {
+        const text = firstTextNode.textContent;
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        const highlighted = text.replace(regex, '<span class="highlight">$1</span>');
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = highlighted;
+
+        while (tempDiv.firstChild) {
+            itemName.insertBefore(tempDiv.firstChild, firstTextNode);
+        }
+        itemName.removeChild(firstTextNode);
+    }
 }
 
 function updateSectionVisibilityForSearch(section, hasResults) {
@@ -228,7 +240,16 @@ function clearSearch() {
     document.querySelectorAll('.menu-item').forEach(item => {
         item.style.display = 'flex';
         const itemName = item.querySelector('.item-name');
-        itemName.innerHTML = itemName.innerHTML.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, '');
+
+        // Remove all highlight spans
+        const highlights = itemName.querySelectorAll('.highlight');
+        highlights.forEach(span => {
+            const textNode = document.createTextNode(span.textContent);
+            span.parentNode.replaceChild(textNode, span);
+        });
+
+        // Normalize text nodes
+        itemName.normalize();
     });
 
     restoreActiveSection();
