@@ -21,6 +21,46 @@
     display: block;
     margin: 0 auto 1rem;
 }
+.header {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+    color: white;
+    text-align: center;
+    padding: 3rem 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Estilos generales para decoraciones */
+.header-decoration {
+    position: absolute;
+    top: 0;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Decoración izquierda */
+.header-decoration-left {
+    left: 0;
+}
+
+/* Decoración derecha */
+.header-decoration-right {
+    right: 0;
+}
+
+.decoration-img {
+    width: 250px;
+    height: auto;
+    display: block;
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+}
+
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
