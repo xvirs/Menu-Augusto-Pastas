@@ -4,9 +4,19 @@ Menú digital interactivo para Augusto Pastas, restaurante ubicado en COFICO. Pa
 
 ## 🌐 Ver la Página Web
 
-**👉 [https://xvirs.github.io/Menu-Augusto-Pastas/](https://xvirs.github.io/Menu-Augusto-Pastas/)**
+### Configurar GitHub Pages
 
-Visita el enlace de arriba para ver el menú completo en línea.
+Para publicar este sitio en línea, necesitas habilitar GitHub Pages:
+
+1. Ve a **Settings** (Configuración) del repositorio
+2. En el menú lateral, selecciona **Pages**
+3. En **Source** (Fuente), selecciona la rama `main` o `master`
+4. Haz clic en **Save** (Guardar)
+5. Espera unos minutos para que GitHub Pages publique el sitio
+
+Una vez configurado, el sitio estará disponible en:
+
+**👉 [https://xvirs.github.io/Menu-Augusto-Pastas/](https://xvirs.github.io/Menu-Augusto-Pastas/)**
 
 ## 📋 Características
 
