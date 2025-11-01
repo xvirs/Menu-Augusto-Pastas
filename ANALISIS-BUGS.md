@@ -1,4 +1,4 @@
-Para el adriel
+Para el ,jhb,jn
 
 # Análisis de Bugs y Mejoras - Menú Augusto Pastas
 
