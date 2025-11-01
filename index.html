@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Augusto Pastas - COFICO | Menú Digital</title>
+    <meta name="description" content="Descubre el menú de Augusto Pastas COFICO. Pastas frescas y comidas 100% caseras desde 2011. Fiambres, pastas artesanales, salsas y postres.">
+    <meta name="keywords" content="pastas frescas, comida casera, fiambres, salsas, postres, Córdoba, COFICO">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Augusto Pastas - COFICO | Menú Digital">
+    <meta property="og:description" content="Pastas frescas y comidas 100% caseras desde 2011. Descubre nuestro menú completo.">
+    <meta property="og:image" content="img/logo.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Augusto Pastas - COFICO | Menú Digital">
+    <meta name="twitter:description" content="Pastas frescas y comidas 100% caseras desde 2011.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,12 +42,12 @@
 </header>
 
     <!-- Navigation -->
-    <nav class="nav-menu">
-        <button class="nav-btn active" data-section="entradas">Para Comenzar</button>
-        <button class="nav-btn" data-section="pastas">Pastas</button>
-        <button class="nav-btn" data-section="salsas">Salsas</button>
-        <button class="nav-btn" data-section="postres">Postres</button>
-        <button class="nav-btn" data-section="bebidas">Bebidas</button>
+    <nav class="nav-menu" role="navigation" aria-label="Navegación del menú">
+        <button class="nav-btn active" data-section="entradas" aria-pressed="true" aria-controls="entradas">Para Comenzar</button>
+        <button class="nav-btn" data-section="pastas" aria-pressed="false" aria-controls="pastas">Pastas</button>
+        <button class="nav-btn" data-section="salsas" aria-pressed="false" aria-controls="salsas">Salsas</button>
+        <button class="nav-btn" data-section="postres" aria-pressed="false" aria-controls="postres">Postres</button>
+        <button class="nav-btn" data-section="bebidas" aria-pressed="false" aria-controls="bebidas">Bebidas</button>
     </nav>
 
     <!-- Main Content -->
