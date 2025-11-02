@@ -173,6 +173,11 @@ function setupSearchListeners() {
 function performSearch(searchTerm) {
     const sections = document.querySelectorAll('.menu-section');
     let hasResults = false;
+    let firstMatch = null;
+
+    document.querySelectorAll('.search-first-result').forEach(item => {
+        item.classList.remove('search-first-result');
+    });
 
     sections.forEach(section => {
         const items = section.querySelectorAll('.menu-item');
@@ -184,6 +189,10 @@ function performSearch(searchTerm) {
                 sectionHasResults = true;
                 hasResults = true;
                 highlightSearchTerm(item, searchTerm);
+
+                if (!firstMatch) {
+                    firstMatch = item;
+                }
             } else {
                 item.style.display = 'none';
             }
@@ -193,6 +202,13 @@ function performSearch(searchTerm) {
     });
 
     toggleNoResultsMessage(hasResults);
+
+    if (firstMatch) {
+        firstMatch.classList.add('search-first-result');
+        setTimeout(() => {
+            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    }
 }
 
 function itemMatchesSearch(item, searchTerm) {
@@ -248,6 +264,7 @@ function updateSectionVisibilityForSearch(section, hasResults) {
 function clearSearch() {
     document.querySelectorAll('.menu-item').forEach(item => {
         item.style.display = 'flex';
+        item.classList.remove('search-first-result');
         const itemName = item.querySelector('.item-name');
 
         // Find wrapper span with highlights
