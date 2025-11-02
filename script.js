@@ -14,22 +14,20 @@ function debounce(func, wait) {
 // Navigation
 function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn');
-    const sections = document.querySelectorAll('.menu-section');
 
     navButtons.forEach(button => {
         button.addEventListener('click', function() {
-            handleNavigation(this, navButtons, sections);
+            handleNavigation(this, navButtons);
         });
     });
 
     initKeyboardNavigation(navButtons);
 }
 
-function handleNavigation(clickedButton, allButtons, allSections) {
+function handleNavigation(clickedButton, allButtons) {
     clearSearchOnNavigation();
     updateButtonStates(allButtons, clickedButton);
-    updateSectionVisibility(allSections, clickedButton);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToSection(clickedButton);
 }
 
 function clearSearchOnNavigation() {
@@ -53,13 +51,11 @@ function updateButtonStates(buttons, activeButton) {
     activeButton.setAttribute('aria-pressed', 'true');
 }
 
-function updateSectionVisibility(sections, activeButton) {
-    sections.forEach(section => section.classList.remove('active'));
-
-    const sectionId = activeButton.getAttribute('data-section');
+function scrollToSection(button) {
+    const sectionId = button.getAttribute('data-section');
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
-        targetSection.classList.add('active');
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
 
@@ -135,14 +131,15 @@ function createSearchContainer() {
     searchContainer.className = 'search-container';
     searchContainer.setAttribute('role', 'search');
     searchContainer.innerHTML = `
-        <input type="text" id="menuSearch" placeholder="Buscar en el menú..." class="search-input"
-               aria-label="Buscar platos en el menú" role="searchbox">
-        <button id="clearSearch" class="clear-search" style="display: none;"
-                aria-label="Limpiar búsqueda">✕</button>
+        <div class="search-wrapper">
+            <input type="text" id="menuSearch" placeholder="Buscar en el menú..." class="search-input"
+                   aria-label="Buscar platos en el menú" role="searchbox">
+            <button id="clearSearch" class="clear-search" style="display: none;"
+                    aria-label="Limpiar búsqueda">✕</button>
+        </div>
     `;
 
-    const mainContent = document.querySelector('.main-content');
-    mainContent.parentNode.insertBefore(searchContainer, mainContent);
+    document.body.appendChild(searchContainer);
 }
 
 function setupSearchListeners() {
@@ -276,18 +273,8 @@ function clearSearch() {
 }
 
 function restoreActiveSection() {
-    const activeButton = document.querySelector('.nav-btn.active');
-    if (activeButton) {
-        const sectionId = activeButton.getAttribute('data-section');
-        const sections = document.querySelectorAll('.menu-section');
-        sections.forEach(section => {
-            if (section.id === sectionId) {
-                section.classList.add('active');
-            } else {
-                section.classList.remove('active');
-            }
-        });
-    }
+    // Ya no es necesario mostrar/ocultar secciones
+    // Todas las secciones están siempre visibles
 }
 
 function toggleNoResultsMessage(hasResults) {
@@ -314,59 +301,6 @@ function removeNoResults() {
     }
 }
 
-// Scroll to top button
-function initScrollToTop() {
-    window.addEventListener('scroll', function() {
-        const scrollButton = document.getElementById('scrollToTop');
-        if (!scrollButton) {
-            createScrollButton();
-        }
-
-        const button = document.getElementById('scrollToTop');
-        if (window.pageYOffset > 300) {
-            button.style.display = 'block';
-        } else {
-            button.style.display = 'none';
-        }
-    });
-}
-
-function createScrollButton() {
-    const button = document.createElement('button');
-    button.id = 'scrollToTop';
-    button.innerHTML = '↑';
-    button.style.cssText = `
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        background-color: var(--primary-red);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-        cursor: pointer;
-        display: none;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-    `;
-
-    button.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    button.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.1)';
-    });
-
-    button.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-    });
-
-    document.body.appendChild(button);
-}
 
 // Animations
 function initAnimations() {
@@ -413,7 +347,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     initMenuItems();
     initSearch();
-    initScrollToTop();
     initAnimations();
     initSmoothScroll();
 });
