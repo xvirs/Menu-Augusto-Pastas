@@ -139,8 +139,7 @@ function createSearchContainer() {
         </div>
     `;
 
-    const navMenu = document.querySelector('.nav-menu');
-    navMenu.parentNode.insertBefore(searchContainer, navMenu.nextSibling);
+    document.body.insertBefore(searchContainer, document.body.firstChild);
 }
 
 function setupSearchListeners() {
