@@ -139,13 +139,25 @@ function createSearchContainer() {
         </div>
     `;
 
-    document.body.appendChild(searchContainer);
+    const mainContent = document.querySelector('.main-content');
+    mainContent.parentNode.insertBefore(searchContainer, mainContent);
 }
 
 function setupSearchListeners() {
     const searchInput = document.getElementById('menuSearch');
     const clearButton = document.getElementById('clearSearch');
+    const searchContainer = document.querySelector('.search-container');
     let searchTimeout = null;
+
+    searchInput.addEventListener('focus', function() {
+        searchContainer.classList.add('keyboard-active');
+    });
+
+    searchInput.addEventListener('blur', function() {
+        setTimeout(() => {
+            searchContainer.classList.remove('keyboard-active');
+        }, 300);
+    });
 
     searchInput.addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase().trim();
