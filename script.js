@@ -1,19 +1,293 @@
-// Utility functions
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
+// ===== SEARCH SYSTEM - SIMPLE & ROBUST =====
+class MenuSearch {
+    constructor() {
+        this.searchInput = null;
+        this.clearButton = null;
+        this.searchTimeout = null;
+        this.allItems = [];
+        this.originalItemStates = new Map();
+        this.init();
+    }
+
+    init() {
+        this.createSearchContainer();
+        this.cacheAllItems();
+        this.setupListeners();
+    }
+
+    createSearchContainer() {
+        const searchContainer = document.createElement('div');
+        searchContainer.className = 'search-container';
+        searchContainer.setAttribute('role', 'search');
+        searchContainer.innerHTML = `
+            <div class="search-wrapper">
+                <input type="text" id="menuSearch" 
+                       placeholder="Buscar en el menú..." 
+                       class="search-input"
+                       aria-label="Buscar platos en el menú" 
+                       role="searchbox"
+                       autocomplete="off">
+                <button id="clearSearch" 
+                        class="clear-search" 
+                        style="display: none;"
+                        aria-label="Limpiar búsqueda">✕</button>
+            </div>
+        `;
+
+        document.body.appendChild(searchContainer);
+        this.searchInput = document.getElementById('menuSearch');
+        this.clearButton = document.getElementById('clearSearch');
+    }
+
+    cacheAllItems() {
+        const items = document.querySelectorAll('.menu-item');
+        items.forEach(item => {
+            const itemName = item.querySelector('.item-name');
+            this.allItems.push(item);
+            // Guardar el HTML original sin procesamiento
+            this.originalItemStates.set(item, {
+                html: itemName.innerHTML,
+                display: item.style.display
+            });
+        });
+    }
+
+    setupListeners() {
+        this.searchInput.addEventListener('input', (e) => this.handleSearch(e));
+        this.clearButton.addEventListener('click', () => this.handleClear());
+    }
+
+    handleSearch(e) {
+        const searchTerm = e.target.value.toLowerCase().trim();
+
+        if (this.searchTimeout) {
+            clearTimeout(this.searchTimeout);
+        }
+
+        if (searchTerm.length === 0) {
+            this.clearButton.style.display = 'none';
+            this.resetSearch();
+            return;
+        }
+
+        this.clearButton.style.display = 'block';
+
+        this.searchTimeout = setTimeout(() => {
+            this.performSearch(searchTerm);
+        }, 300);
+    }
+
+    handleClear() {
+        this.searchInput.value = '';
+        this.clearButton.style.display = 'none';
+        this.resetSearch();
+        this.searchInput.focus();
+    }
+
+    performSearch(searchTerm) {
+        let matchedItems = [];
+        let visibleSections = new Set();
+
+        this.resetHighlights();
+
+        this.allItems.forEach(item => {
+            const itemName = item.querySelector('.item-name');
+            const itemDescription = item.querySelector('.item-description');
+
+            const nameText = itemName.textContent.toLowerCase();
+            const descriptionText = itemDescription ? itemDescription.textContent.toLowerCase() : '';
+            const fullText = nameText + ' ' + descriptionText;
+
+            if (fullText.includes(searchTerm)) {
+                matchedItems.push(item);
+                
+                let parent = item.closest('.menu-section');
+                if (parent) {
+                    visibleSections.add(parent);
+                }
+
+                this.highlightMatch(item, searchTerm);
+            }
+        });
+
+        this.allItems.forEach(item => {
+            item.style.display = matchedItems.includes(item) ? 'flex' : 'none';
+        });
+
+        document.querySelectorAll('.menu-section').forEach(section => {
+            section.style.display = visibleSections.has(section) ? 'block' : 'none';
+        });
+
+        if (matchedItems.length === 0) {
+            this.showNoResults(searchTerm);
+        } else {
+            this.removeNoResults();
+            setTimeout(() => {
+                matchedItems[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    }
+
+    /**
+     * Busca y resalta coincidencias en el elemento sin partir palabras
+     * Maneja correctamente acentos y caracteres especiales
+     */
+    highlightMatch(item, searchTerm) {
+        const itemName = item.querySelector('.item-name');
+        const originalState = this.originalItemStates.get(item);
+        
+        if (!originalState) return;
+
+        // Obtener el texto original sin procesar
+        const cleanDiv = document.createElement('div');
+        cleanDiv.innerHTML = originalState.html;
+        const plainText = cleanDiv.textContent;
+
+        // Crear una versión normalizada para la búsqueda (sin acentos)
+        const normalizedPlainText = this.normalizeText(plainText);
+        const normalizedSearchTerm = this.normalizeText(searchTerm);
+
+        // Encontrar coincidencias en el texto normalizado
+        const matches = this.findMatches(normalizedPlainText, normalizedSearchTerm);
+
+        if (matches.length === 0) {
+            itemName.innerHTML = originalState.html;
+            return;
+        }
+
+        // Construir el HTML resaltado utilizando los índices correctos
+        const highlightedHtml = this.buildHighlightedHtml(plainText, matches);
+        itemName.innerHTML = highlightedHtml;
+    }
+
+    /**
+     * Normaliza texto removiendo acentos para comparación
+     */
+    normalizeText(text) {
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    /**
+     * Encuentra todas las coincidencias de un término en el texto
+     * Retorna array de objetos {start, end, word}
+     */
+    findMatches(normalizedText, normalizedTerm) {
+        const matches = [];
+        const regex = new RegExp(`\\b${normalizedTerm}\\w*`, 'gi');
+        let match;
+
+        while ((match = regex.exec(normalizedText)) !== null) {
+            matches.push({
+                start: match.index,
+                end: match.index + match[0].length,
+                word: match[0]
+            });
+        }
+
+        return matches;
+    }
+
+    /**
+     * Construye el HTML con las partes resaltadas
+     * Utiliza los índices del texto normalizado pero aplica al texto original
+     */
+    buildHighlightedHtml(plainText, matches) {
+        if (matches.length === 0) {
+            return this.escapeHtml(plainText);
+        }
+
+        let html = '';
+        let lastIndex = 0;
+
+        matches.forEach(match => {
+            // Agregar texto antes del match
+            if (match.start > lastIndex) {
+                html += this.escapeHtml(plainText.substring(lastIndex, match.start));
+            }
+
+            // Agregar el match resaltado
+            const matchedText = plainText.substring(match.start, match.end);
+            html += `<span class="highlight">${this.escapeHtml(matchedText)}</span>`;
+
+            lastIndex = match.end;
+        });
+
+        // Agregar texto restante
+        if (lastIndex < plainText.length) {
+            html += this.escapeHtml(plainText.substring(lastIndex));
+        }
+
+        return html;
+    }
+
+    /**
+     * Escapa caracteres HTML para evitar inyecciones
+     */
+    escapeHtml(text) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
         };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+        return text.replace(/[&<>"']/g, m => map[m]);
+    }
+
+    resetHighlights() {
+        this.allItems.forEach(item => {
+            const itemName = item.querySelector('.item-name');
+            const originalState = this.originalItemStates.get(item);
+            
+            if (originalState) {
+                itemName.innerHTML = originalState.html;
+            }
+        });
+    }
+
+    resetSearch() {
+        this.allItems.forEach(item => {
+            item.style.display = 'flex';
+        });
+
+        document.querySelectorAll('.menu-section').forEach(section => {
+            section.style.display = 'block';
+        });
+
+        this.resetHighlights();
+        this.removeNoResults();
+    }
+
+    showNoResults(searchTerm) {
+        this.removeNoResults();
+        
+        const noResults = document.createElement('div');
+        noResults.className = 'no-results';
+        noResults.innerHTML = `No se encontraron resultados para "<strong>${this.escapeHtml(searchTerm)}</strong>"`;
+        
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.appendChild(noResults);
+        }
+    }
+
+    removeNoResults() {
+        const noResults = document.querySelector('.no-results');
+        if (noResults) {
+            noResults.remove();
+        }
+    }
 }
 
-// Navigation
+// ===== NAVIGATION =====
 function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn');
+    
+    // Set first button as active
+    if (navButtons.length > 0) {
+        navButtons[0].classList.add('active');
+        navButtons[0].setAttribute('aria-pressed', 'true');
+    }
 
     navButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -38,7 +312,9 @@ function clearSearchOnNavigation() {
         if (clearButton) {
             clearButton.style.display = 'none';
         }
-        clearSearch();
+        if (window.menuSearch) {
+            window.menuSearch.resetSearch();
+        }
     }
 }
 
@@ -78,7 +354,7 @@ function initKeyboardNavigation(navButtons) {
     });
 }
 
-// Menu Items
+// ===== MENU ITEMS =====
 function initMenuItems() {
     const menuItems = document.querySelectorAll('.menu-item');
 
@@ -120,214 +396,7 @@ function setupNonClickableItem(item) {
     item.style.cursor = 'default';
 }
 
-// Search
-function initSearch() {
-    createSearchContainer();
-    setupSearchListeners();
-}
-
-function createSearchContainer() {
-    const searchContainer = document.createElement('div');
-    searchContainer.className = 'search-container';
-    searchContainer.setAttribute('role', 'search');
-    searchContainer.innerHTML = `
-        <div class="search-wrapper">
-            <input type="text" id="menuSearch" placeholder="Buscar en el menú..." class="search-input"
-                   aria-label="Buscar platos en el menú" role="searchbox">
-            <button id="clearSearch" class="clear-search" style="display: none;"
-                    aria-label="Limpiar búsqueda">✕</button>
-        </div>
-    `;
-
-    document.body.appendChild(searchContainer);
-}
-
-function setupSearchListeners() {
-    const searchInput = document.getElementById('menuSearch');
-    const clearButton = document.getElementById('clearSearch');
-    let searchTimeout = null;
-
-    searchInput.addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase().trim();
-
-        if (searchTimeout) {
-            clearTimeout(searchTimeout);
-            searchTimeout = null;
-        }
-
-        if (searchTerm.length > 0) {
-            clearButton.style.display = 'block';
-            searchTimeout = setTimeout(() => {
-                performSearch(searchTerm);
-            }, 600);
-        } else {
-            clearButton.style.display = 'none';
-            clearSearch();
-        }
-    });
-
-    clearButton.addEventListener('click', function() {
-        searchInput.value = '';
-        clearButton.style.display = 'none';
-        if (searchTimeout) {
-            clearTimeout(searchTimeout);
-            searchTimeout = null;
-        }
-        clearSearch();
-        searchInput.focus();
-    });
-}
-
-function performSearch(searchTerm) {
-    const sections = document.querySelectorAll('.menu-section');
-    let hasResults = false;
-    let firstMatch = null;
-
-    document.querySelectorAll('.search-first-result').forEach(item => {
-        item.classList.remove('search-first-result');
-    });
-
-    sections.forEach(section => {
-        const items = section.querySelectorAll('.menu-item');
-        let sectionHasResults = false;
-
-        items.forEach(item => {
-            if (itemMatchesSearch(item, searchTerm)) {
-                item.style.display = 'flex';
-                sectionHasResults = true;
-                hasResults = true;
-                highlightSearchTerm(item, searchTerm);
-
-                if (!firstMatch) {
-                    firstMatch = item;
-                }
-            } else {
-                item.style.display = 'none';
-            }
-        });
-
-        updateSectionVisibilityForSearch(section, sectionHasResults);
-    });
-
-    toggleNoResultsMessage(hasResults);
-
-    if (firstMatch) {
-        firstMatch.classList.add('search-first-result');
-        setTimeout(() => {
-            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
-    }
-}
-
-function itemMatchesSearch(item, searchTerm) {
-    const itemName = item.querySelector('.item-name');
-    const itemDescription = item.querySelector('.item-description');
-
-    const nameText = itemName.textContent.toLowerCase();
-    const descriptionText = itemDescription ? itemDescription.textContent.toLowerCase() : '';
-    const combinedText = nameText + ' ' + descriptionText;
-
-    return combinedText.includes(searchTerm);
-}
-
-function highlightSearchTerm(item, searchTerm) {
-    const itemName = item.querySelector('.item-name');
-
-    // First, remove any existing highlight wrapper
-    const existingWrapper = itemName.querySelector('span[style*="inline"]');
-    let text;
-
-    if (existingWrapper) {
-        // If there's already a wrapper, get the clean text from it
-        text = existingWrapper.textContent.trim();
-        const textNode = document.createTextNode(text);
-        itemName.replaceChild(textNode, existingWrapper);
-    }
-
-    // Now get the first text node
-    const firstTextNode = itemName.childNodes[0];
-
-    if (firstTextNode && firstTextNode.nodeType === Node.TEXT_NODE) {
-        text = firstTextNode.textContent.trim();
-        const regex = new RegExp(`(${searchTerm})`, 'gi');
-        const highlighted = text.replace(regex, '<span class="highlight">$1</span>');
-
-        // Wrap in a span to keep inline
-        const wrapper = document.createElement('span');
-        wrapper.innerHTML = highlighted;
-        wrapper.style.display = 'inline';
-
-        itemName.replaceChild(wrapper, firstTextNode);
-    }
-}
-
-function updateSectionVisibilityForSearch(section, hasResults) {
-    if (hasResults) {
-        section.classList.add('active');
-    } else {
-        section.classList.remove('active');
-    }
-}
-
-function clearSearch() {
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.style.display = 'flex';
-        item.classList.remove('search-first-result');
-        const itemName = item.querySelector('.item-name');
-
-        // Find wrapper span with highlights
-        const wrapper = itemName.querySelector('span[style*="inline"]');
-        if (wrapper) {
-            const textNode = document.createTextNode(wrapper.textContent);
-            itemName.replaceChild(textNode, wrapper);
-        } else {
-            // Fallback: remove highlight spans
-            const highlights = itemName.querySelectorAll('.highlight');
-            highlights.forEach(span => {
-                const textNode = document.createTextNode(span.textContent);
-                span.parentNode.replaceChild(textNode, span);
-            });
-        }
-
-        // Normalize text nodes
-        itemName.normalize();
-    });
-
-    restoreActiveSection();
-    removeNoResults();
-}
-
-function restoreActiveSection() {
-    // Ya no es necesario mostrar/ocultar secciones
-    // Todas las secciones están siempre visibles
-}
-
-function toggleNoResultsMessage(hasResults) {
-    if (!hasResults) {
-        showNoResults();
-    } else {
-        removeNoResults();
-    }
-}
-
-function showNoResults() {
-    if (!document.querySelector('.no-results')) {
-        const noResults = document.createElement('div');
-        noResults.className = 'no-results';
-        noResults.innerHTML = 'No se encontraron resultados para tu búsqueda.';
-        document.querySelector('.main-content').appendChild(noResults);
-    }
-}
-
-function removeNoResults() {
-    const noResults = document.querySelector('.no-results');
-    if (noResults) {
-        noResults.remove();
-    }
-}
-
-
-// Animations
+// ===== ANIMATIONS =====
 function initAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -367,11 +436,11 @@ function initSmoothScroll() {
     });
 }
 
-// Initialization
+// ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
+    window.menuSearch = new MenuSearch();
     initNavigation();
     initMenuItems();
-    initSearch();
     initAnimations();
     initSmoothScroll();
 });
