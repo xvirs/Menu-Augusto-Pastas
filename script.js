@@ -285,9 +285,9 @@ function highlightSearchTerm(item, searchTerm) {
 
 function updateSectionVisibilityForSearch(section, hasResults) {
     if (hasResults) {
-        section.classList.add('active');
+        section.style.display = 'block';
     } else {
-        section.classList.remove('active');
+        section.style.display = 'none';
     }
 }
 
@@ -320,8 +320,10 @@ function clearSearch() {
 }
 
 function restoreActiveSection() {
-    // Ya no es necesario mostrar/ocultar secciones
-    // Todas las secciones están siempre visibles
+    // Restaurar visibilidad de todas las secciones
+    document.querySelectorAll('.menu-section').forEach(section => {
+        section.style.display = 'block';
+    });
 }
 
 function toggleNoResultsMessage(hasResults) {
