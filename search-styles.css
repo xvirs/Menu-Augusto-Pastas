@@ -5,9 +5,12 @@
     left: 0;
     right: 0;
     background-color: white;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    z-index: 99;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    z-index: 1000;
+    border-top: 1px solid #f0f0f0;
+    transition: transform 0.2s ease-out;
 }
 
 .search-wrapper {
@@ -103,8 +106,7 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .search-container {
-        padding: 0.75rem 0.5rem;
-        padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+        padding: 0.75rem 1rem;
     }
 
     .search-input {

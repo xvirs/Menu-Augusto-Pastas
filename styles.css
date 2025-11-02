@@ -162,7 +162,7 @@ body {
 /* Main Content */
 .main-content {
     max-width: 900px;
-    margin: 2rem auto;
+    margin: 0 auto 2rem;
     padding: 0 1rem 6rem 1rem;
 }
 
