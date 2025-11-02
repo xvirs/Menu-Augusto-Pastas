@@ -149,15 +149,25 @@ function setupSearchListeners() {
     const searchContainer = document.querySelector('.search-container');
     let searchTimeout = null;
 
-    searchInput.addEventListener('focus', function() {
-        searchContainer.classList.add('keyboard-active');
-    });
+    // Detectar teclado virtual usando Visual Viewport API
+    if (window.visualViewport) {
+        let lastHeight = window.visualViewport.height;
 
-    searchInput.addEventListener('blur', function() {
-        setTimeout(() => {
-            searchContainer.classList.remove('keyboard-active');
-        }, 300);
-    });
+        window.visualViewport.addEventListener('resize', () => {
+            const currentHeight = window.visualViewport.height;
+            const viewportHeightDiff = lastHeight - currentHeight;
+
+            if (viewportHeightDiff > 100) {
+                // Teclado abierto - mover buscador arriba del teclado
+                searchContainer.style.transform = `translateY(-${viewportHeightDiff}px)`;
+            } else {
+                // Teclado cerrado - volver a posición original
+                searchContainer.style.transform = 'translateY(0)';
+            }
+
+            lastHeight = currentHeight;
+        });
+    }
 
     searchInput.addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase().trim();
