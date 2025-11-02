@@ -1,55 +1,14 @@
-// ===== KEYBOARD HANDLING - Prevent keyboard from hiding search bar =====
+// ===== KEYBOARD HANDLING - Optimized for mobile =====
 function initKeyboardHandling() {
-    const searchContainer = document.querySelector('.search-container');
     const searchInput = document.getElementById('menuSearch');
-
     if (!searchInput) return;
 
-    // Escuchar cuando el input obtiene focus
+    // Smooth scroll cuando el input obtiene focus
     searchInput.addEventListener('focus', function() {
-        // Pequeño delay para que el teclado aparezca primero
         setTimeout(() => {
-            // Scroll del container de búsqueda a la vista
-            searchContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            
-            // También hacer scroll del input
-            searchInput.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 300);
     });
-
-    // Manejo para iOS específicamente
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        // En iOS, el teclado virtual puede cambiar el viewport
-        window.addEventListener('visualViewportChange', () => {
-            if (searchInput === document.activeElement) {
-                searchContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }
-        });
-
-        // Alternativa: monitorear cambios en el tamaño de la ventana
-        let lastInnerHeight = window.innerHeight;
-        window.addEventListener('resize', () => {
-            const currentHeight = window.innerHeight;
-            // Si la altura cambió, probablemente sea por el teclado
-            if (currentHeight < lastInnerHeight && searchInput === document.activeElement) {
-                setTimeout(() => {
-                    searchContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                }, 100);
-            }
-            lastInnerHeight = currentHeight;
-        });
-    }
-
-    // Android handling
-    if (/Android/.test(navigator.userAgent)) {
-        window.addEventListener('resize', () => {
-            if (searchInput === document.activeElement) {
-                setTimeout(() => {
-                    searchContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                }, 200);
-            }
-        });
-    }
 }
 
 // ===== SEARCH SYSTEM - SIMPLE & ROBUST =====
@@ -75,20 +34,33 @@ class MenuSearch {
         searchContainer.setAttribute('role', 'search');
         searchContainer.innerHTML = `
             <div class="search-wrapper">
-                <input type="text" id="menuSearch" 
-                       placeholder="Buscar en el menú..." 
+                <input type="text" id="menuSearch"
+                       placeholder="Buscar en el menú..."
                        class="search-input"
-                       aria-label="Buscar platos en el menú" 
+                       aria-label="Buscar platos en el menú"
                        role="searchbox"
                        autocomplete="off">
-                <button id="clearSearch" 
-                        class="clear-search" 
+                <button id="clearSearch"
+                        class="clear-search"
                         style="display: none;"
                         aria-label="Limpiar búsqueda">✕</button>
             </div>
         `;
 
-        document.body.appendChild(searchContainer);
+        // Insertar dentro del sticky-header-wrapper
+        const stickyWrapper = document.querySelector('.sticky-header-wrapper');
+        if (stickyWrapper) {
+            stickyWrapper.appendChild(searchContainer);
+        } else {
+            // Fallback: insertar después del nav-menu si no existe el wrapper
+            const navMenu = document.querySelector('.nav-menu');
+            if (navMenu && navMenu.parentNode) {
+                navMenu.parentNode.insertBefore(searchContainer, navMenu.nextSibling);
+            } else {
+                document.body.appendChild(searchContainer);
+            }
+        }
+
         this.searchInput = document.getElementById('menuSearch');
         this.clearButton = document.getElementById('clearSearch');
     }

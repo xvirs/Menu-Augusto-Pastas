@@ -47,14 +47,18 @@
     </div>
 </header>
 
-    <!-- Navigation -->
-    <nav class="nav-menu" role="navigation" aria-label="Navegación del menú">
-        <button class="nav-btn" data-section="entradas" aria-pressed="false" aria-controls="entradas">Para Comenzar</button>
-        <button class="nav-btn" data-section="pastas" aria-pressed="false" aria-controls="pastas">Pastas</button>
-        <button class="nav-btn" data-section="salsas" aria-pressed="false" aria-controls="salsas">Salsas</button>
-        <button class="nav-btn" data-section="postres" aria-pressed="false" aria-controls="postres">Postres</button>
-        <button class="nav-btn" data-section="bebidas" aria-pressed="false" aria-controls="bebidas">Bebidas</button>
-    </nav>
+    <!-- Sticky Navigation and Search Wrapper -->
+    <div class="sticky-header-wrapper">
+        <!-- Navigation -->
+        <nav class="nav-menu" role="navigation" aria-label="Navegación del menú">
+            <button class="nav-btn" data-section="entradas" aria-pressed="false" aria-controls="entradas">Para Comenzar</button>
+            <button class="nav-btn" data-section="pastas" aria-pressed="false" aria-controls="pastas">Pastas</button>
+            <button class="nav-btn" data-section="salsas" aria-pressed="false" aria-controls="salsas">Salsas</button>
+            <button class="nav-btn" data-section="postres" aria-pressed="false" aria-controls="postres">Postres</button>
+            <button class="nav-btn" data-section="bebidas" aria-pressed="false" aria-controls="bebidas">Bebidas</button>
+        </nav>
+        <!-- Search will be inserted here by JavaScript -->
+    </div>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -444,6 +448,6 @@
     </footer>
 
     <script src="menu-data.js"></script>
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

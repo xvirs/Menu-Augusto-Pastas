@@ -115,6 +115,19 @@ body {
     display: block;
 }
 
+/* Sticky Header Wrapper */
+.sticky-header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* Forzar aceleración por hardware */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+}
+
 /* Navigation */
 .nav-menu {
     display: flex;
@@ -123,10 +136,8 @@ body {
     gap: 0.5rem;
     padding: 1.5rem 1rem;
     background: var(--gradient-red);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    box-shadow: none;
+    width: 100%;
 }
 
 .nav-btn {
@@ -163,7 +174,7 @@ body {
 .main-content {
     max-width: 900px;
     margin: 0 auto 2rem;
-    padding: 0 1rem 6rem 1rem;
+    padding: 1rem 1rem 2rem 1rem;
 }
 
 .menu-section {
@@ -173,7 +184,7 @@ body {
     padding: 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
-    scroll-margin-top: 100px;
+    scroll-margin-top: 150px;
 }
 
 @keyframes fadeIn {
@@ -340,12 +351,12 @@ body {
     background-color: var(--text-dark);
     color: white;
     text-align: center;
-    padding: 2rem 1rem 6rem 1rem;
-    margin-top: 3rem;
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
 }
 
 .footer p {
-    margin: 0.5rem 0;
+    margin: 0.3rem 0;
     font-size: 0.9rem;
 }
 
@@ -355,7 +366,9 @@ body {
         font-size: 1.6rem;
     }
 
-
+    .sticky-header-wrapper {
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
 
     .nav-menu {
         padding: 1rem 0.5rem;
@@ -373,6 +386,7 @@ body {
     .menu-section {
         padding: 1.5rem 1rem;
         border-radius: 0;
+        scroll-margin-top: 140px;
     }
 
     .section-title {
@@ -433,6 +447,10 @@ body {
         font-size: 0.9rem;
     }
 
+    .menu-section {
+        scroll-margin-top: 130px;
+    }
+
     .section-title {
         font-size: 1.6rem;
     }
@@ -446,9 +464,24 @@ body {
     }
 }
 
+/* iOS Safari Optimizations */
+@supports (-webkit-touch-callout: none) {
+    .sticky-header-wrapper {
+        /* Forzar posicionamiento sticky en Safari */
+        position: -webkit-sticky;
+        position: sticky;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+}
+
 /* Print */
 @media print {
     .nav-menu {
+        display: none;
+    }
+
+    .search-container {
         display: none;
     }
 

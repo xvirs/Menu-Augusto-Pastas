@@ -1,14 +1,9 @@
 /* ===== SEARCH STYLES ===== */
 .search-container {
-    position: fixed;
-    bottom: env(safe-area-inset-bottom, 0);
-    left: 0;
-    right: 0;
     background-color: white;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
-    z-index: 9999;
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .search-wrapper {
@@ -26,6 +21,8 @@
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     background-color: white;
+    /* Prevenir zoom automático en iOS */
+    font-size: max(16px, 1.05rem);
 }
 
 .search-input:focus {
@@ -57,19 +54,16 @@
 }
 
 /* ===== HIGHLIGHT STYLES ===== */
-/* El highlight solo resalta el span, no toda la línea */
 .highlight {
     background-color: #ffeb3b;
     padding: 2px 2px;
     border-radius: 2px;
     font-weight: 600;
     color: inherit;
-    /* No añadimos padding vertical para evitar saltos de línea */
     display: inline;
     white-space: normal;
 }
 
-/* Aseguramos que el item-name conserve su flujo normal */
 .item-name {
     display: block;
     word-break: break-word;
@@ -79,7 +73,6 @@
     hyphens: manual;
 }
 
-/* La descripción se mantiene intacta */
 .item-description {
     display: block;
     font-size: 0.85rem;
@@ -105,11 +98,10 @@
 @media (max-width: 768px) {
     .search-container {
         padding: 0.75rem 0.5rem;
-        padding-bottom: max(0.75rem, calc(0.5rem + env(safe-area-inset-bottom)));
     }
 
     .search-input {
-        font-size: 1rem;
+        font-size: 16px;
         padding: 0.9rem 2.8rem 0.9rem 1rem;
     }
 
@@ -130,14 +122,11 @@
 @media (max-width: 480px) {
     .search-container {
         padding: 0.5rem 0.5rem;
-        padding-bottom: max(0.5rem, calc(0.5rem + env(safe-area-inset-bottom)));
     }
 
     .search-input {
-        font-size: 1rem;
-        padding: 0.8rem 2.6rem 0.8rem 1rem;
-        /* Evitar zoom automático en iOS */
         font-size: 16px;
+        padding: 0.8rem 2.6rem 0.8rem 1rem;
     }
 
     .clear-search {
@@ -153,41 +142,12 @@
     }
 }
 
-/* iOS Safe Area - Específico para iPhones con notch */
+/* ===== MOBILE OPTIMIZATIONS ===== */
 @supports (-webkit-touch-callout: none) {
-    .search-container {
-        position: fixed;
-        bottom: env(safe-area-inset-bottom, 0);
-        padding: 1rem 1rem;
-        padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
-        /* Asegurar que el container no sea movido por el teclado */
-        -webkit-user-select: none;
-        user-select: none;
-    }
-
     .search-input {
-        /* Prevenir zoom automático en iOS cuando font-size < 16px */
+        /* Prevenir zoom automático en iOS */
         font-size: 16px;
-        /* Permitir que scrollee si es necesario */
         -webkit-appearance: none;
         appearance: none;
-    }
-}
-
-/* Android Safe Area */
-@media (max-width: 480px) and (orientation: portrait) {
-    .search-container {
-        /* En Android, el teclado virtual reduce el viewport height */
-        bottom: env(safe-area-inset-bottom, 0);
-        z-index: 9999;
-    }
-}
-
-/* Viewport meta para controlar el comportamiento del teclado */
-@supports (width: 100vw) {
-    .search-container {
-        width: 100vw;
-        left: 0;
-        right: auto;
     }
 }
