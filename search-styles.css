@@ -1,16 +1,14 @@
 /* ===== SEARCH STYLES ===== */
 .search-container {
     position: fixed;
-    bottom: 0;
+    bottom: env(safe-area-inset-bottom, 0);
     left: 0;
     right: 0;
     background-color: white;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-    z-index: 1000;
-    border-top: 1px solid #f0f0f0;
-    transition: transform 0.2s ease-out;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
+    z-index: 9999;
 }
 
 .search-wrapper {
@@ -106,7 +104,8 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .search-container {
-        padding: 0.75rem 1rem;
+        padding: 0.75rem 0.5rem;
+        padding-bottom: max(0.75rem, calc(0.5rem + env(safe-area-inset-bottom)));
     }
 
     .search-input {
@@ -131,11 +130,14 @@
 @media (max-width: 480px) {
     .search-container {
         padding: 0.5rem 0.5rem;
+        padding-bottom: max(0.5rem, calc(0.5rem + env(safe-area-inset-bottom)));
     }
 
     .search-input {
         font-size: 1rem;
         padding: 0.8rem 2.6rem 0.8rem 1rem;
+        /* Evitar zoom automático en iOS */
+        font-size: 16px;
     }
 
     .clear-search {
@@ -151,11 +153,41 @@
     }
 }
 
-/* iOS Safe Area */
+/* iOS Safe Area - Específico para iPhones con notch */
 @supports (-webkit-touch-callout: none) {
     .search-container {
         position: fixed;
         bottom: env(safe-area-inset-bottom, 0);
+        padding: 1rem 1rem;
         padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
+        /* Asegurar que el container no sea movido por el teclado */
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .search-input {
+        /* Prevenir zoom automático en iOS cuando font-size < 16px */
+        font-size: 16px;
+        /* Permitir que scrollee si es necesario */
+        -webkit-appearance: none;
+        appearance: none;
+    }
+}
+
+/* Android Safe Area */
+@media (max-width: 480px) and (orientation: portrait) {
+    .search-container {
+        /* En Android, el teclado virtual reduce el viewport height */
+        bottom: env(safe-area-inset-bottom, 0);
+        z-index: 9999;
+    }
+}
+
+/* Viewport meta para controlar el comportamiento del teclado */
+@supports (width: 100vw) {
+    .search-container {
+        width: 100vw;
+        left: 0;
+        right: auto;
     }
 }

@@ -1,3 +1,57 @@
+// ===== KEYBOARD HANDLING - Prevent keyboard from hiding search bar =====
+function initKeyboardHandling() {
+    const searchContainer = document.querySelector('.search-container');
+    const searchInput = document.getElementById('menuSearch');
+
+    if (!searchInput) return;
+
+    // Escuchar cuando el input obtiene focus
+    searchInput.addEventListener('focus', function() {
+        // Pequeño delay para que el teclado aparezca primero
+        setTimeout(() => {
+            // Scroll del container de búsqueda a la vista
+            searchContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            
+            // También hacer scroll del input
+            searchInput.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 300);
+    });
+
+    // Manejo para iOS específicamente
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        // En iOS, el teclado virtual puede cambiar el viewport
+        window.addEventListener('visualViewportChange', () => {
+            if (searchInput === document.activeElement) {
+                searchContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+        });
+
+        // Alternativa: monitorear cambios en el tamaño de la ventana
+        let lastInnerHeight = window.innerHeight;
+        window.addEventListener('resize', () => {
+            const currentHeight = window.innerHeight;
+            // Si la altura cambió, probablemente sea por el teclado
+            if (currentHeight < lastInnerHeight && searchInput === document.activeElement) {
+                setTimeout(() => {
+                    searchContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }, 100);
+            }
+            lastInnerHeight = currentHeight;
+        });
+    }
+
+    // Android handling
+    if (/Android/.test(navigator.userAgent)) {
+        window.addEventListener('resize', () => {
+            if (searchInput === document.activeElement) {
+                setTimeout(() => {
+                    searchContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }, 200);
+            }
+        });
+    }
+}
+
 // ===== SEARCH SYSTEM - SIMPLE & ROBUST =====
 class MenuSearch {
     constructor() {
@@ -438,6 +492,7 @@ function initSmoothScroll() {
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
+    initKeyboardHandling();
     window.menuSearch = new MenuSearch();
     initNavigation();
     initMenuItems();
