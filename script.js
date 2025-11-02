@@ -139,23 +139,28 @@ function createSearchContainer() {
         </div>
     `;
 
-    document.body.appendChild(searchContainer);
+    const navMenu = document.querySelector('.nav-menu');
+    navMenu.parentNode.insertBefore(searchContainer, navMenu.nextSibling);
 }
 
 function setupSearchListeners() {
     const searchInput = document.getElementById('menuSearch');
     const clearButton = document.getElementById('clearSearch');
-
-    const debouncedSearch = debounce((searchTerm) => {
-        performSearch(searchTerm);
-    }, 300);
+    let searchTimeout = null;
 
     searchInput.addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase().trim();
 
+        if (searchTimeout) {
+            clearTimeout(searchTimeout);
+            searchTimeout = null;
+        }
+
         if (searchTerm.length > 0) {
             clearButton.style.display = 'block';
-            debouncedSearch(searchTerm);
+            searchTimeout = setTimeout(() => {
+                performSearch(searchTerm);
+            }, 600);
         } else {
             clearButton.style.display = 'none';
             clearSearch();
@@ -165,6 +170,10 @@ function setupSearchListeners() {
     clearButton.addEventListener('click', function() {
         searchInput.value = '';
         clearButton.style.display = 'none';
+        if (searchTimeout) {
+            clearTimeout(searchTimeout);
+            searchTimeout = null;
+        }
         clearSearch();
         searchInput.focus();
     });
