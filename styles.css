@@ -64,21 +64,33 @@ body {
 }
 
 .instagram {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     color: white;
     text-decoration: none;
     font-size: 1rem;
     margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    border: 2px solid white;
-    border-radius: 25px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
     transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.instagram svg {
+    width: 20px;
+    height: 20px;
+    display: block;
 }
 
 .instagram:hover {
-    background-color: white;
     color: var(--primary-red);
-    transform: scale(1.05);
+    transform: scale(1.1);
+}
+
+.instagram:hover svg {
+    filter: brightness(0.8);
 }
 
 .header-decoration {
