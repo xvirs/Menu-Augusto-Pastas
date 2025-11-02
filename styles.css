@@ -127,6 +127,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    margin-top: 5rem;
 }
 
 .nav-btn {
@@ -355,10 +356,11 @@ body {
         font-size: 1.6rem;
     }
 
-    
+
 
     .nav-menu {
         padding: 1rem 0.5rem;
+        margin-top: 4.5rem;
     }
 
     .nav-btn {
