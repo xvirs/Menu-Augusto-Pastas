@@ -139,7 +139,7 @@ function createSearchContainer() {
         </div>
     `;
 
-    document.body.insertBefore(searchContainer, document.body.firstChild);
+    document.body.appendChild(searchContainer);
 }
 
 function setupSearchListeners() {

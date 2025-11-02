@@ -1,12 +1,12 @@
 .search-container {
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
     background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    z-index: 101;
+    z-index: 99;
 }
 
 .search-wrapper {
@@ -77,6 +77,7 @@
 @media (max-width: 768px) {
     .search-container {
         padding: 0.75rem 0.5rem;
+        padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
     }
 
     .search-input {
@@ -86,5 +87,12 @@
 
     .clear-search {
         right: 0.8rem;
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    .search-container {
+        position: fixed;
+        bottom: env(safe-area-inset-bottom, 0);
     }
 }

@@ -127,7 +127,6 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    margin-top: 5rem;
 }
 
 .nav-btn {
@@ -164,7 +163,7 @@ body {
 .main-content {
     max-width: 900px;
     margin: 2rem auto;
-    padding: 0 1rem;
+    padding: 0 1rem 6rem 1rem;
 }
 
 .menu-section {
@@ -341,7 +340,7 @@ body {
     background-color: var(--text-dark);
     color: white;
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 6rem 1rem;
     margin-top: 3rem;
 }
 
@@ -360,7 +359,6 @@ body {
 
     .nav-menu {
         padding: 1rem 0.5rem;
-        margin-top: 4.5rem;
     }
 
     .nav-btn {
