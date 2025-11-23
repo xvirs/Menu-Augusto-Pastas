@@ -336,11 +336,12 @@ class MenuSearch {
             const itemName = item.querySelector('.item-name');
             const itemDescription = item.querySelector('.item-description');
 
-            const nameText = itemName.textContent.toLowerCase();
-            const descriptionText = itemDescription ? itemDescription.textContent.toLowerCase() : '';
+            const nameText = this.normalizeText(itemName.textContent.toLowerCase());
+            const descriptionText = itemDescription ? this.normalizeText(itemDescription.textContent.toLowerCase()) : '';
             const fullText = nameText + ' ' + descriptionText;
+            const normalizedSearchTerm = this.normalizeText(searchTerm);
 
-            if (fullText.includes(searchTerm)) {
+            if (fullText.includes(normalizedSearchTerm)) {
                 matchedItems.push(item);
 
                 let parent = item.closest('.menu-section');
