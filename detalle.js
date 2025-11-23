@@ -26,7 +26,18 @@ function applyTheme() {
     if (theme) {
         const root = document.documentElement;
         if (theme.primaryColor) root.style.setProperty('--primary-color', theme.primaryColor);
-        if (theme.backgroundColor) root.style.setProperty('--background-color', theme.backgroundColor);
+        if (theme.backgroundColor) {
+            root.style.setProperty('--background-color', theme.backgroundColor);
+            // Simple dark mode check
+            const isDark = theme.backgroundColor.toLowerCase() === '#121212' || theme.backgroundColor.toLowerCase() === '#000000';
+            if (isDark) {
+                root.style.setProperty('--bg-light', '#1E1E1E');
+                root.style.setProperty('--border-color', '#333333');
+                root.style.setProperty('--text-light', '#AAAAAA');
+            }
+        }
+        if (theme.textColor) root.style.setProperty('--text-color', theme.textColor);
+        if (theme.accentColor) root.style.setProperty('--secondary-color', theme.accentColor);
     }
 }
 

@@ -1,13 +1,13 @@
 :root {
-    --primary-red: #D53F3F;
-    --dark-red: #B32D2D;
-    --text-dark: #2C2C2C;
+    --primary-color: #D53F3F;
+    --secondary-color: #B32D2D;
+    --text-color: #2C2C2C;
     --text-light: #666;
     --bg-light: #FFF;
-    --bg-cream: #FFF8F0;
+    --background-color: #FFF8F0;
     --border-color: #E5E5E5;
     /* Gradiente horizontal para header y nav */
-    --gradient-red: linear-gradient(90deg, var(--primary-red) 0%, var(--dark-red) 100%);
+    --primary-gradient: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
 }
 
 * {
@@ -18,14 +18,14 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--text-dark);
+    color: var(--text-color);
     line-height: 1.6;
-    background-color: var(--bg-cream);
+    background-color: var(--background-color);
     font-size: 16px;
 }
 
 .header {
-    background: var(--gradient-red);
+    background: var(--primary-gradient);
     color: white;
     text-align: center;
     padding: 3rem 1rem;
@@ -85,7 +85,7 @@ body {
 }
 
 .instagram:hover {
-    color: var(--primary-red);
+    color: var(--primary-color);
     transform: scale(1.1);
 }
 
@@ -120,7 +120,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: white;
+    background: var(--background-color); /* Changed from white to match theme */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     /* Forzar aceleración por hardware */
     transform: translateZ(0);
@@ -135,7 +135,7 @@ body {
     flex-wrap: wrap;
     gap: 0.5rem;
     padding: 1.5rem 1rem;
-    background: var(--gradient-red);
+    background: var(--primary-gradient);
     box-shadow: none;
     width: 100%;
 }
@@ -159,7 +159,7 @@ body {
 
 .nav-btn.active {
     background-color: white;
-    color: var(--primary-red);
+    color: var(--primary-color);
     border-color: white;
 }
 
@@ -179,7 +179,7 @@ body {
 
 .menu-section {
     display: block;
-    background-color: white;
+    background-color: var(--bg-light); /* Keep sections light for contrast or make dynamic? Let's keep light for now but maybe add a variable if needed. For dark mode, this should probably be dark too. */
     border-radius: 10px;
     padding: 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -200,10 +200,10 @@ body {
 
 .section-title {
     font-size: 2.2rem;
-    color: var(--primary-red);
+    color: var(--primary-color);
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 3px solid var(--primary-red);
+    border-bottom: 3px solid var(--primary-color);
     font-weight: 400;
 }
 
@@ -216,13 +216,13 @@ body {
 
 .subsection-title {
     font-size: 1.6rem;
-    color: var(--dark-red);
+    color: var(--secondary-color);
     margin: 2rem 0 1rem 0;
     font-weight: 500;
 }
 
 .info-banner {
-    background-color: var(--primary-red);
+    background-color: var(--primary-color);
     color: white;
     padding: 1rem;
     border-radius: 8px;
@@ -237,8 +237,8 @@ body {
     color: var(--text-light);
     margin-bottom: 1.5rem;
     padding: 1rem;
-    background-color: var(--bg-cream);
-    border-left: 4px solid var(--primary-red);
+    background-color: var(--background-color);
+    border-left: 4px solid var(--primary-color);
     border-radius: 4px;
     font-size: 1.05rem;
     line-height: 1.7;
@@ -251,13 +251,13 @@ body {
     gap: 1rem;
     margin-bottom: 2rem;
     padding: 1rem;
-    background-color: var(--bg-cream);
+    background-color: var(--background-color);
     border-radius: 8px;
 }
 
 .sauce-item {
     padding: 0.5rem 1rem;
-    background-color: white;
+    background-color: var(--bg-light);
     border: 1px solid var(--border-color);
     border-radius: 20px;
     font-size: 1rem;
@@ -293,7 +293,7 @@ body {
     position: absolute;
     right: 1rem;
     opacity: 0;
-    color: var(--primary-red);
+    color: var(--primary-color);
     font-size: 1.2rem;
     font-weight: bold;
     transition: all 0.3s ease;
@@ -301,7 +301,7 @@ body {
 }
 
 .menu-item.has-detail:hover {
-    background-color: var(--bg-cream);
+    background-color: var(--background-color);
     border-radius: 8px;
     padding-right: 3rem;
 }
@@ -322,7 +322,7 @@ body {
 .item-name {
     flex: 1;
     font-size: 1.1rem;
-    color: var(--text-dark);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
@@ -341,14 +341,14 @@ body {
 .item-price {
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--primary-red);
+    color: var(--primary-color);
     white-space: nowrap;
     margin-left: 1rem;
 }
 
 /* Footer */
 .footer {
-    background-color: var(--text-dark);
+    background-color: var(--text-color);
     color: white;
     text-align: center;
     padding: 1.5rem 1rem;
