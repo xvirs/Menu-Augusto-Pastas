@@ -23,10 +23,14 @@ const restaurantConfig = {
             decorationRight: "img/dibujo1.png"
         },
         theme: {
-            primaryColor: "#D32F2F", // Rojo intenso del menú
-            backgroundColor: "#FFF8F0", // Crema muy suave/Blanco
-            textColor: "#2C2C2C",
-            accentColor: "#B32D2D"
+            primaryColor: "#C62828", // Rojo de la marca
+            backgroundColor: "#F9F5EA", // Crema del sitio web
+            textColor: "#1A1A1A", // Negro suave
+            accentColor: "#B32D2D",
+            fonts: {
+                heading: "'Courier New', Courier, monospace", // Tipografía estilo máquina de escribir
+                body: "'Courier New', Courier, monospace" // Homogéneo con la web
+            }
         }
     },
     menuSections: [
