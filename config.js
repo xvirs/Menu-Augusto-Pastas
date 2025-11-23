@@ -37,7 +37,6 @@ const restaurantConfig = {
         {
             id: "para-comenzar",
             title: "Para Comenzar",
-            note: "*(La porción)",
             items: [
                 "combinado-de-fiambres-y-conservas-x-2-pers",
                 "jamon-crudo",
@@ -65,7 +64,6 @@ const restaurantConfig = {
         {
             id: "pastas",
             title: "Pastas",
-            banner: "Cubiertos para compartir: $4.000",
             items: [
                 "spaghettis",
                 "tagliatelles",
@@ -100,8 +98,11 @@ const restaurantConfig = {
                 {
                     title: "Salsas Básicas",
                     note: "(Incluidas en el precio)",
-                    type: "list",
-                    items: ["Salsa Filetto", "Salsa Mixta", "Salsa Blanca"]
+                    items: [
+                        "salsa-filetto",
+                        "salsa-mixta",
+                        "salsa-blanca"
+                    ]
                 },
                 {
                     title: "Salsas Especiales",
@@ -137,7 +138,6 @@ const restaurantConfig = {
         {
             id: "bebidas",
             title: "Aperitivos",
-            description: "Una copa tradicional, servida para abrir el apetito y preparar tu paladar antes de los deliciosos sabores que estás a punto de disfrutar.",
             items: [
                 "cinzano-soda-limon",
                 "carpano-bianco-soda-limon",
@@ -488,6 +488,9 @@ const restaurantConfig = {
         },
 
         // SALSAS
+        "salsa-filetto": { name: "Salsa Filetto", price: "0" },
+        "salsa-mixta": { name: "Salsa Mixta", price: "0" },
+        "salsa-blanca": { name: "Salsa Blanca", price: "0" },
         "cuatro-quesos": { name: "Cuatro Quesos", price: "2.300" },
         "salteado-de-cubos-de-tomate": { name: "Salteado de Tomate y Hierbas", price: "3.000" },
         "crema-de-puerro-y-panceta": { name: "Crema de Puerro y Panceta", price: "3.000" },
