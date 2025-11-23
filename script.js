@@ -1,17 +1,219 @@
-// ===== KEYBOARD HANDLING - Optimized for mobile =====
+// ===== UTILITIES =====
+function generateSlug(name) {
+    return name
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Eliminar acentos
+        .replace(/[^a-z0-9ñ\s-]/g, '') // Eliminar caracteres especiales (preserva ñ)
+        .trim()
+        .replace(/\s+/g, '-'); // Reemplazar espacios por guiones
+}
+
+// ===== RENDERING ENGINE =====
+const App = {
+    init() {
+        if (typeof restaurantConfig === 'undefined') {
+            console.error('Configuration file not loaded');
+            return;
+        }
+        this.applyTheme();
+        this.renderHead();
+        this.renderHeader();
+        this.renderNav();
+        this.renderMenu();
+        this.renderFooter();
+
+        // Initialize interactive features after rendering
+        this.initInteractiveFeatures();
+    },
+
+    applyTheme() {
+        const theme = restaurantConfig.info.theme;
+        if (theme) {
+            const root = document.documentElement;
+            if (theme.primaryColor) root.style.setProperty('--primary-color', theme.primaryColor);
+            if (theme.backgroundColor) root.style.setProperty('--background-color', theme.backgroundColor);
+            // Add more theme variables as needed
+        }
+    },
+
+    renderHead() {
+        const info = restaurantConfig.info;
+        document.title = `${info.name} - ${info.location} | Menú Digital`;
+
+        // Update meta tags
+        this.setMeta('description', info.description);
+        this.setMeta('keywords', info.keywords);
+
+        // Update OG tags
+        this.setMetaProperty('og:title', `${info.name} - ${info.location} | Menú Digital`);
+        this.setMetaProperty('og:description', info.description);
+        this.setMetaProperty('og:image', info.images.logo);
+
+        // Update Favicon
+        const favicon = document.querySelector('link[rel="icon"]');
+        if (favicon) favicon.href = info.images.favicon;
+    },
+
+    setMeta(name, content) {
+        let element = document.querySelector(`meta[name="${name}"]`);
+        if (!element) {
+            element = document.createElement('meta');
+            element.name = name;
+            document.head.appendChild(element);
+        }
+        element.content = content;
+    },
+
+    setMetaProperty(property, content) {
+        let element = document.querySelector(`meta[property="${property}"]`);
+        if (!element) {
+            element = document.createElement('meta');
+            element.setAttribute('property', property);
+            document.head.appendChild(element);
+        }
+        element.content = content;
+    },
+
+    renderHeader() {
+        const info = restaurantConfig.info;
+        const header = document.getElementById('mainHeader');
+
+        header.innerHTML = `
+            <div class="header-decoration header-decoration-left">
+                <img src="${info.images.decorationLeft}" alt="Decoración izquierda" class="decoration-img">
+            </div>
+            <div class="header-decoration header-decoration-right">
+                <img src="${info.images.decorationRight}" alt="Decoración derecha" class="decoration-img">
+            </div>
+            <div class="header-content">
+                <img src="${info.images.logo}" alt="${info.name} Logo" class="logo">
+                <h1>${info.name.toUpperCase()}</h1>
+                <p class="subtitle">${info.subtitle}</p>
+                ${this.renderSocialLink(info.social.instagram)}
+            </div>
+        `;
+    },
+
+    renderSocialLink(instagram) {
+        if (!instagram) return '';
+        return `
+            <a href="${instagram.url}" target="_blank" class="instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                ${instagram.handle.replace('@', '')}
+            </a>
+        `;
+    },
+
+    renderNav() {
+        const nav = document.getElementById('navMenu');
+        const sections = restaurantConfig.menuSections;
+
+        nav.innerHTML = sections.map((section, index) => `
+            <button class="nav-btn ${index === 0 ? 'active' : ''}" 
+                    data-section="${section.id}" 
+                    aria-pressed="${index === 0}" 
+                    aria-controls="${section.id}">
+                ${section.title}
+            </button>
+        `).join('');
+    },
+
+    renderMenu() {
+        const main = document.getElementById('mainContent');
+        const sections = restaurantConfig.menuSections;
+
+        main.innerHTML = sections.map((section, index) => `
+            <section id="${section.id}" class="menu-section ${index === 0 ? 'active' : ''}">
+                <h2 class="section-title">
+                    ${section.title} 
+                    ${section.note ? `<span class="note">${section.note}</span>` : ''}
+                </h2>
+                ${section.banner ? `
+                    <div class="info-banner">
+                        <p>${section.banner}</p>
+                    </div>
+                ` : ''}
+                ${section.description ? `<p class="aperitivo-desc">${section.description}</p>` : ''}
+                
+                ${this.renderSectionItems(section.items)}
+                
+                ${section.subsections ? section.subsections.map(sub => `
+                    <h3 class="subsection-title">
+                        ${sub.title}
+                        ${sub.note ? `<span class="note">${sub.note}</span>` : ''}
+                    </h3>
+                    ${sub.description ? `<p class="aperitivo-desc">${sub.description}</p>` : ''}
+                    ${sub.type === 'list' ? this.renderSimpleList(sub.items) : this.renderSectionItems(sub.items)}
+                `).join('') : ''}
+            </section>
+        `).join('');
+    },
+
+    renderSectionItems(itemIds) {
+        if (!itemIds || itemIds.length === 0) return '';
+
+        return `<div class="menu-items">
+            ${itemIds.map(id => {
+            const item = restaurantConfig.items[id];
+            if (!item) return '';
+
+            return `
+                    <div class="menu-item">
+                        <span class="item-name">
+                            ${item.name}
+                            ${item.shortDescription ? `<span class="item-description">${item.shortDescription}</span>` : ''}
+                        </span>
+                        <span class="item-price">$${item.price}</span>
+                    </div>
+                `;
+        }).join('')}
+        </div>`;
+    },
+
+    renderSimpleList(items) {
+        return `<div class="basic-sauces">
+            ${items.map(item => `<span class="sauce-item">${item}</span>`).join('')}
+        </div>`;
+    },
+
+    renderFooter() {
+        const info = restaurantConfig.info;
+        const footer = document.getElementById('mainFooter');
+        const currentYear = new Date().getFullYear();
+
+        footer.innerHTML = `
+            <p>&copy; ${currentYear} ${info.name} - ${info.location}</p>
+            <p>Desde el ${info.since} • ${info.subtitle}</p>
+        `;
+    },
+
+    initInteractiveFeatures() {
+        initKeyboardHandling();
+        window.menuSearch = new MenuSearch();
+        initNavigation();
+        initMenuItems();
+        initAnimations();
+        initSmoothScroll();
+    }
+};
+
+// ===== INTERACTIVE FEATURES (Adapted from original script.js) =====
+
+// Keyboard Handling
 function initKeyboardHandling() {
     const searchInput = document.getElementById('menuSearch');
     if (!searchInput) return;
 
-    // Smooth scroll cuando el input obtiene focus
-    searchInput.addEventListener('focus', function() {
+    searchInput.addEventListener('focus', function () {
         setTimeout(() => {
             searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 300);
     });
 }
 
-// ===== SEARCH SYSTEM - SIMPLE & ROBUST =====
+// Search System
 class MenuSearch {
     constructor() {
         this.searchInput = null;
@@ -29,6 +231,9 @@ class MenuSearch {
     }
 
     createSearchContainer() {
+        // Check if already exists
+        if (document.querySelector('.search-container')) return;
+
         const searchContainer = document.createElement('div');
         searchContainer.className = 'search-container';
         searchContainer.setAttribute('role', 'search');
@@ -47,12 +252,10 @@ class MenuSearch {
             </div>
         `;
 
-        // Insertar dentro del sticky-header-wrapper
         const stickyWrapper = document.querySelector('.sticky-header-wrapper');
         if (stickyWrapper) {
             stickyWrapper.appendChild(searchContainer);
         } else {
-            // Fallback: insertar después del nav-menu si no existe el wrapper
             const navMenu = document.querySelector('.nav-menu');
             if (navMenu && navMenu.parentNode) {
                 navMenu.parentNode.insertBefore(searchContainer, navMenu.nextSibling);
@@ -70,7 +273,6 @@ class MenuSearch {
         items.forEach(item => {
             const itemName = item.querySelector('.item-name');
             this.allItems.push(item);
-            // Guardar el HTML original sin procesamiento
             this.originalItemStates.set(item, {
                 html: itemName.innerHTML,
                 display: item.style.display
@@ -79,8 +281,12 @@ class MenuSearch {
     }
 
     setupListeners() {
-        this.searchInput.addEventListener('input', (e) => this.handleSearch(e));
-        this.clearButton.addEventListener('click', () => this.handleClear());
+        if (this.searchInput) {
+            this.searchInput.addEventListener('input', (e) => this.handleSearch(e));
+        }
+        if (this.clearButton) {
+            this.clearButton.addEventListener('click', () => this.handleClear());
+        }
     }
 
     handleSearch(e) {
@@ -126,7 +332,7 @@ class MenuSearch {
 
             if (fullText.includes(searchTerm)) {
                 matchedItems.push(item);
-                
+
                 let parent = item.closest('.menu-section');
                 if (parent) {
                     visibleSections.add(parent);
@@ -154,26 +360,19 @@ class MenuSearch {
         }
     }
 
-    /**
-     * Busca y resalta coincidencias en el elemento sin partir palabras
-     * Maneja correctamente acentos y caracteres especiales
-     */
     highlightMatch(item, searchTerm) {
         const itemName = item.querySelector('.item-name');
         const originalState = this.originalItemStates.get(item);
-        
+
         if (!originalState) return;
 
-        // Obtener el texto original sin procesar
         const cleanDiv = document.createElement('div');
         cleanDiv.innerHTML = originalState.html;
         const plainText = cleanDiv.textContent;
 
-        // Crear una versión normalizada para la búsqueda (sin acentos)
         const normalizedPlainText = this.normalizeText(plainText);
         const normalizedSearchTerm = this.normalizeText(searchTerm);
 
-        // Encontrar coincidencias en el texto normalizado
         const matches = this.findMatches(normalizedPlainText, normalizedSearchTerm);
 
         if (matches.length === 0) {
@@ -181,22 +380,14 @@ class MenuSearch {
             return;
         }
 
-        // Construir el HTML resaltado utilizando los índices correctos
         const highlightedHtml = this.buildHighlightedHtml(plainText, matches);
         itemName.innerHTML = highlightedHtml;
     }
 
-    /**
-     * Normaliza texto removiendo acentos para comparación
-     */
     normalizeText(text) {
         return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
-    /**
-     * Encuentra todas las coincidencias de un término en el texto
-     * Retorna array de objetos {start, end, word}
-     */
     findMatches(normalizedText, normalizedTerm) {
         const matches = [];
         const regex = new RegExp(`\\b${normalizedTerm}\\w*`, 'gi');
@@ -213,10 +404,6 @@ class MenuSearch {
         return matches;
     }
 
-    /**
-     * Construye el HTML con las partes resaltadas
-     * Utiliza los índices del texto normalizado pero aplica al texto original
-     */
     buildHighlightedHtml(plainText, matches) {
         if (matches.length === 0) {
             return this.escapeHtml(plainText);
@@ -226,19 +413,16 @@ class MenuSearch {
         let lastIndex = 0;
 
         matches.forEach(match => {
-            // Agregar texto antes del match
             if (match.start > lastIndex) {
                 html += this.escapeHtml(plainText.substring(lastIndex, match.start));
             }
 
-            // Agregar el match resaltado
             const matchedText = plainText.substring(match.start, match.end);
             html += `<span class="highlight">${this.escapeHtml(matchedText)}</span>`;
 
             lastIndex = match.end;
         });
 
-        // Agregar texto restante
         if (lastIndex < plainText.length) {
             html += this.escapeHtml(plainText.substring(lastIndex));
         }
@@ -246,9 +430,6 @@ class MenuSearch {
         return html;
     }
 
-    /**
-     * Escapa caracteres HTML para evitar inyecciones
-     */
     escapeHtml(text) {
         const map = {
             '&': '&amp;',
@@ -264,7 +445,7 @@ class MenuSearch {
         this.allItems.forEach(item => {
             const itemName = item.querySelector('.item-name');
             const originalState = this.originalItemStates.get(item);
-            
+
             if (originalState) {
                 itemName.innerHTML = originalState.html;
             }
@@ -286,11 +467,11 @@ class MenuSearch {
 
     showNoResults(searchTerm) {
         this.removeNoResults();
-        
+
         const noResults = document.createElement('div');
         noResults.className = 'no-results';
         noResults.innerHTML = `No se encontraron resultados para "<strong>${this.escapeHtml(searchTerm)}</strong>"`;
-        
+
         const mainContent = document.querySelector('.main-content');
         if (mainContent) {
             mainContent.appendChild(noResults);
@@ -305,18 +486,12 @@ class MenuSearch {
     }
 }
 
-// ===== NAVIGATION =====
+// Navigation
 function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn');
-    
-    // Set first button as active
-    if (navButtons.length > 0) {
-        navButtons[0].classList.add('active');
-        navButtons[0].setAttribute('aria-pressed', 'true');
-    }
 
     navButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             handleNavigation(this, navButtons);
         });
     });
@@ -362,7 +537,7 @@ function scrollToSection(button) {
 }
 
 function initKeyboardNavigation(navButtons) {
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
             const activeButton = document.querySelector('.nav-btn.active');
             const buttons = Array.from(navButtons);
@@ -380,7 +555,7 @@ function initKeyboardNavigation(navButtons) {
     });
 }
 
-// ===== MENU ITEMS =====
+// Menu Items Logic
 function initMenuItems() {
     const menuItems = document.querySelectorAll('.menu-item');
 
@@ -388,9 +563,16 @@ function initMenuItems() {
         const itemName = item.querySelector('.item-name');
         if (!itemName) return;
 
-        const dishName = itemName.childNodes[0].textContent.trim();
+        // Get the text content, removing any nested elements like .item-description
+        const clone = itemName.cloneNode(true);
+        const description = clone.querySelector('.item-description');
+        if (description) description.remove();
+        const dishName = clone.textContent.trim();
+
         const slug = generateSlug(dishName);
-        const hasDetailPage = typeof menuData !== 'undefined' && menuData[slug];
+
+        // Find item in config by slug
+        const hasDetailPage = restaurantConfig.items[slug];
 
         if (hasDetailPage) {
             setupClickableItem(item, slug);
@@ -404,15 +586,15 @@ function setupClickableItem(item, slug) {
     item.style.cursor = 'pointer';
     item.classList.add('has-detail');
 
-    item.addEventListener('mouseenter', function() {
+    item.addEventListener('mouseenter', function () {
         this.style.transform = 'translateX(5px)';
     });
 
-    item.addEventListener('mouseleave', function() {
+    item.addEventListener('mouseleave', function () {
         this.style.transform = 'translateX(0)';
     });
 
-    item.addEventListener('click', function() {
+    item.addEventListener('click', function () {
         window.location.href = `detalle.html?plato=${slug}`;
     });
 }
@@ -422,14 +604,14 @@ function setupNonClickableItem(item) {
     item.style.cursor = 'default';
 }
 
-// ===== ANIMATIONS =====
+// Animations
 function initAnimations() {
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver(function (entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -449,7 +631,7 @@ function initAnimations() {
 
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
@@ -462,12 +644,7 @@ function initSmoothScroll() {
     });
 }
 
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', function() {
-    initKeyboardHandling();
-    window.menuSearch = new MenuSearch();
-    initNavigation();
-    initMenuItems();
-    initAnimations();
-    initSmoothScroll();
+// Initialize Application
+document.addEventListener('DOMContentLoaded', function () {
+    App.init();
 });
