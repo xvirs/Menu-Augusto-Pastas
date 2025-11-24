@@ -2,10 +2,12 @@
     --primary-color: #D53F3F;
     --secondary-color: #B32D2D;
     --text-color: #2C2C2C;
-    --text-light: #666;
+    --text-light: #4A4A4A;
+    /* Oscurecido para mejor contraste */
     --bg-light: #FFF;
-    --background-color: #FFF8F0;
-    --border-color: #E5E5E5;
+    --background-color: #F9F5EA;
+    --border-color: #D0D0D0;
+    /* Más visible */
     --font-heading: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     /* Gradiente horizontal para header y nav */
@@ -21,9 +23,11 @@
 body {
     font-family: var(--font-body);
     color: var(--text-color);
-    line-height: 1.6;
+    line-height: 1.7;
+    /* Mejor espaciado */
     background-color: var(--background-color);
-    font-size: 16px;
+    font-size: 17px;
+    /* Aumentado para mejor legibilidad */
 }
 
 .header {
@@ -288,9 +292,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 1.2rem 1rem;
-    /* Increase padding for touch targets */
-    border-bottom: 1px solid var(--border-color);
+    padding: 1.3rem 1rem;
+    /* Más espacio */
+    border-bottom: 1.5px solid var(--border-color);
+    /* Borde más visible */
     transition: background-color 0.2s ease;
     position: relative;
 }
@@ -345,26 +350,34 @@ body {
 
 .item-name {
     flex: 1;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    /* Aumentado */
     color: var(--text-color);
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    line-height: 1.5;
+    line-height: 1.6;
+    /* Mejor espaciado */
+    font-weight: 500;
+    /* Más peso para mejor legibilidad */
 }
 
 .item-description {
-    font-size: 0.95rem;
+    font-size: 1rem;
+    /* Aumentado */
     color: var(--text-light);
     font-style: italic;
     display: block;
     margin-top: 0.3rem;
-    line-height: 1.4;
+    line-height: 1.5;
+    /* Mejor espaciado */
 }
 
 .item-price {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.35rem;
+    /* Aumentado */
+    font-weight: 700;
+    /* Más peso */
     color: var(--primary-color);
     white-space: nowrap;
     margin-left: 1rem;
