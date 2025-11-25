@@ -1,4 +1,9 @@
 const restaurantConfig = {
+    // ===== CONFIGURACIÓN DEL CARRITO DE COMPRAS =====
+    // Cambia este valor a 1 para activar el carrito de compras
+    // Cambia este valor a 0 para desactivar el carrito de compras
+    cartEnabled: 0, // 1 = activado, 0 = desactivado
+
     info: {
         name: "Augusto Pastas",
         location: "COFICO",

@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
     renderFooter();
     applyTheme();
 
-    // Inicializar carrito de compras
-    if (typeof Cart !== 'undefined') {
+    // Inicializar carrito de compras solo si está habilitado
+    if (restaurantConfig.cartEnabled === 1 && typeof Cart !== 'undefined') {
         window.cart = new Cart();
     }
 
@@ -151,8 +151,10 @@ function loadDishDetails(slug) {
         }
     }
 
-    // Agregar botón de carrito
-    addCartButtonToDetail(slug, dish.name, dish.price);
+    // Agregar botón de carrito solo si está habilitado
+    if (restaurantConfig.cartEnabled === 1) {
+        addCartButtonToDetail(slug, dish.name, dish.price);
+    }
 
     // Animation
     const detailCard = document.querySelector('.detail-card');

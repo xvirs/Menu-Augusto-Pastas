@@ -590,8 +590,10 @@ function initMenuItems() {
         // Find item in config by slug
         const hasDetailPage = restaurantConfig.items[slug];
 
-        // Agregar botón de carrito a todos los items
-        addCartButton(item, slug, dishName, itemPrice.textContent.replace('$', ''));
+        // Agregar botón de carrito solo si está habilitado
+        if (restaurantConfig.cartEnabled === 1) {
+            addCartButton(item, slug, dishName, itemPrice.textContent.replace('$', ''));
+        }
 
         if (hasDetailPage) {
             setupClickableItem(item, slug);
@@ -695,8 +697,8 @@ function initSmoothScroll() {
 document.addEventListener('DOMContentLoaded', function () {
     App.init();
 
-    // Inicializar carrito de compras
-    if (typeof Cart !== 'undefined') {
+    // Inicializar carrito de compras solo si está habilitado
+    if (restaurantConfig.cartEnabled === 1 && typeof Cart !== 'undefined') {
         window.cart = new Cart();
     }
 });
