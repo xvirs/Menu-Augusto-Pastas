@@ -43,6 +43,10 @@ function applyTheme() {
         }
         if (theme.textColor) root.style.setProperty('--text-color', theme.textColor);
         if (theme.accentColor) root.style.setProperty('--secondary-color', theme.accentColor);
+        if (theme.fonts) {
+            if (theme.fonts.heading) root.style.setProperty('--font-heading', theme.fonts.heading);
+            if (theme.fonts.body) root.style.setProperty('--font-body', theme.fonts.body);
+        }
     }
 }
 

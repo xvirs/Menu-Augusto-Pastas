@@ -23,17 +23,20 @@ const restaurantConfig = {
             decorationRight: "img/dibujo1.png"
         },
         theme: {
-            primaryColor: "#D32F2F", // Rojo intenso del menú
-            backgroundColor: "#FFF8F0", // Crema muy suave/Blanco
-            textColor: "#2C2C2C",
-            accentColor: "#B32D2D"
+            primaryColor: "#C62828", // Rojo de la marca
+            backgroundColor: "#F9F5EA", // Crema del sitio web
+            textColor: "#1A1A1A", // Negro suave
+            accentColor: "#B32D2D",
+            fonts: {
+                heading: "'Courier New', Courier, monospace", // Tipografía estilo máquina de escribir
+                body: "'Courier New', Courier, monospace" // Homogéneo con la web
+            }
         }
     },
     menuSections: [
         {
             id: "para-comenzar",
             title: "Para Comenzar",
-            note: "*(La porción)",
             items: [
                 "combinado-de-fiambres-y-conservas-x-2-pers",
                 "jamon-crudo",
@@ -61,7 +64,6 @@ const restaurantConfig = {
         {
             id: "pastas",
             title: "Pastas",
-            banner: "Cubiertos para compartir: $4.000",
             items: [
                 "spaghettis",
                 "tagliatelles",
@@ -96,8 +98,11 @@ const restaurantConfig = {
                 {
                     title: "Salsas Básicas",
                     note: "(Incluidas en el precio)",
-                    type: "list",
-                    items: ["Salsa Filetto", "Salsa Mixta", "Salsa Blanca"]
+                    items: [
+                        "salsa-filetto",
+                        "salsa-mixta",
+                        "salsa-blanca"
+                    ]
                 },
                 {
                     title: "Salsas Especiales",
@@ -133,7 +138,6 @@ const restaurantConfig = {
         {
             id: "bebidas",
             title: "Aperitivos",
-            description: "Una copa tradicional, servida para abrir el apetito y preparar tu paladar antes de los deliciosos sabores que estás a punto de disfrutar.",
             items: [
                 "cinzano-soda-limon",
                 "carpano-bianco-soda-limon",
@@ -484,6 +488,9 @@ const restaurantConfig = {
         },
 
         // SALSAS
+        "salsa-filetto": { name: "Salsa Filetto", price: "0" },
+        "salsa-mixta": { name: "Salsa Mixta", price: "0" },
+        "salsa-blanca": { name: "Salsa Blanca", price: "0" },
         "cuatro-quesos": { name: "Cuatro Quesos", price: "2.300" },
         "salteado-de-cubos-de-tomate": { name: "Salteado de Tomate y Hierbas", price: "3.000" },
         "crema-de-puerro-y-panceta": { name: "Crema de Puerro y Panceta", price: "3.000" },

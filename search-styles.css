@@ -1,10 +1,9 @@
 /* ===== SEARCH STYLES ===== */
 .search-container {
-    background-color: var(--bg-light);
-    /* Changed from white */
+    background-color: var(--primary-color);
+    /* Fondo rojo */
     padding: 1rem;
     width: 100%;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .search-wrapper {
@@ -17,12 +16,13 @@
     width: 100%;
     padding: 1rem 3rem 1rem 1rem;
     font-size: 1.05rem;
-    border: 2px solid var(--border-color);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    /* Borde sutil sobre fondo rojo */
     border-radius: 25px;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: var(--background-color);
-    /* Changed from white to match page bg or slightly different */
+    background-color: white;
+    /* Fondo blanco para contraste */
     color: var(--text-color);
     /* Prevenir zoom automático en iOS */
     font-size: max(16px, 1.05rem);
