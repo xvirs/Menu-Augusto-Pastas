@@ -46,7 +46,7 @@ const restaurantConfig = {
             items: [
                 "papas-bravas",
                 "entrepanes-de-focaccia",
-                "lomito-ahumado-queso-firmo-morrones-en-conserva-y-pesto-de-albahaca",
+                "lomito-ahumado-queso-fynbo-morrones-en-conserva-y-pesto-de-albahaca",
                 "langostinos-al-oporto",
                 "duo-de-tortellinis-y-cresta-di-gallo-gratinados",
                 "mejillones-media-valva-al-vino-blanco",
@@ -126,8 +126,8 @@ const restaurantConfig = {
             type: "Tapa caliente",
             icon: "🥖"
         },
-        "lomito-ahumado-queso-firmo-morrones-en-conserva-y-pesto-de-albahaca": {
-            name: "Lomito Ahumado, Queso Firmo, Morrones en Conserva y Pesto de Albahaca",
+        "lomito-ahumado-queso-fynbo-morrones-en-conserva-y-pesto-de-albahaca": {
+            name: "Lomito Ahumado, Queso Fynbo, Morrones en Conserva y Pesto de Albahaca",
             price: "7.400",
             description: "Combinación de lomito ahumado con quesos y vegetales.",
             type: "Tapa caliente",
