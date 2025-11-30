@@ -127,8 +127,20 @@ function loadDishDetails(slug) {
     document.getElementById('dishServing').textContent = dish.serving || '1 porción';
     document.getElementById('dishType').textContent = dish.type || 'Plato';
 
+    const imagePlaceholder = document.getElementById('dishImage');
     const imageIcon = document.querySelector('.image-icon');
-    if (imageIcon && dish.icon) {
+
+    // Reset classes and content
+    imagePlaceholder.className = 'dish-image-placeholder';
+    imageIcon.style.display = 'block';
+    imageIcon.textContent = '';
+    imagePlaceholder.style.backgroundImage = 'none';
+
+    if (dish.image) {
+        imagePlaceholder.classList.add('has-image');
+        imagePlaceholder.style.backgroundImage = `url('${dish.image}')`;
+        imageIcon.style.display = 'none';
+    } else if (dish.icon) {
         imageIcon.textContent = dish.icon;
     }
 

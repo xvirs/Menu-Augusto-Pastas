@@ -86,6 +86,20 @@
     justify-content: center;
     margin: 0 auto 2rem auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.dish-image-placeholder.has-image {
+    background-color: transparent;
+    border-radius: 15px;
+    /* Optional: slightly less rounded for rectangular images if preferred, or keep 50% for circle */
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .image-icon {

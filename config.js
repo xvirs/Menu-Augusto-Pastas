@@ -117,14 +117,16 @@ const restaurantConfig = {
             price: "6.500",
             description: "Papas crujientes con salsa brava picante.",
             type: "Tapa caliente",
-            icon: "🥔"
+            icon: "🥔",
+            image: "img/platos/papas-bravas.jpg"
         },
         "entrepanes-de-focaccia": {
             name: "Entrepanes de Focaccia",
             description: "Jamón crudo, oliva, tomates cherry, queso holanda y queso crema con hierbas",
             price: "7.400",
             type: "Tapa caliente",
-            icon: "🥖"
+            icon: "🥖",
+            image: "img/platos/entrepanes-de-focaccia.png"
         },
         "lomito-ahumado-queso-fynbo-morrones-en-conserva-y-pesto-de-albahaca": {
             name: "Lomito Ahumado, Queso Fynbo, Morrones en Conserva y Pesto de Albahaca",
@@ -138,28 +140,32 @@ const restaurantConfig = {
             price: "15.000",
             description: "Langostinos salteados en salsa de oporto.",
             type: "Tapa caliente premium",
-            icon: "🦐"
+            icon: "🦐",
+            image: "img/platos/langostinos-al-oporto.jpg"
         },
         "duo-de-tortellinis-y-cresta-di-gallo-gratinados": {
             name: "Dúo de Tortellinis y Cresta di Gallo Gratinados",
             price: "8.800",
             description: "Pasta rellena gratinada al horno.",
             type: "Tapa caliente",
-            icon: "🍝"
+            icon: "🍝",
+            image: "img/platos/duo-de-tortellinis-y-cresta-di-gallo-gratinados.jpg"
         },
         "mejillones-media-valva-al-vino-blanco": {
             name: "Mejillones Media Valva al Vino Blanco",
             price: "12.000",
             description: "Mejillones frescos cocidos en vino blanco.",
             type: "Tapa caliente",
-            icon: "🦪"
+            icon: "🦪",
+            image: "img/platos/mejillones-media-valva-al-vino-blanco.jpg"
         },
         "camembert-graten-y-tomates-confitados": {
             name: "Camembert Gratén y Tomates Confitados",
             price: "12.000",
             description: "Queso camembert gratinado con tomates confitados.",
             type: "Tapa caliente",
-            icon: "🧀"
+            icon: "🧀",
+            image: "img/platos/camembert-graten-y-tomates-confitados.jpg"
         },
 
         // TAPAS FRÍAS
