@@ -107,13 +107,13 @@ function loadDishDetails(slug) {
     // Find category
     let category = '';
     for (const section of restaurantConfig.menuSections) {
-        if (section.items.includes(slug)) {
+        if (section.items && section.items.includes(slug)) {
             category = section.title;
             break;
         }
         if (section.subsections) {
             for (const sub of section.subsections) {
-                if (sub.items.includes(slug)) {
+                if (sub.items && sub.items.includes(slug)) {
                     category = section.title + ' - ' + sub.title;
                     break;
                 }

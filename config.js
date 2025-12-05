@@ -28,8 +28,8 @@ const restaurantConfig = {
             textColor: "#1A1A1A", // Negro suave
             accentColor: "#B32D2D",
             fonts: {
-                heading: "'Courier New', Courier, monospace",
-                body: "'Courier New', Courier, monospace"
+                heading: "'Georgia', 'Times New Roman', Times, serif",
+                body: "'Helvetica Neue', Helvetica, Arial, sans-serif"
             }
         },
         schedule: "Open - 18 a 21 hs",
@@ -115,14 +115,18 @@ const restaurantConfig = {
         "papas-bravas": {
             name: "Papas Bravas",
             price: "6.500",
-            description: "Papas crujientes con salsa brava picante.",
+            description: "Papas doradas y crujientes bañadas en nuestra salsa brava artesanal, con un toque picante que despierta el paladar.",
+            ingredients: ["Papas", "Salsa brava picante", "Aceite de oliva", "Pimentón"],
+            allergens: "Puede contener trazas de gluten",
             type: "Tapa caliente",
             icon: "🥔",
-            image: "img/platos/papas-bravas.jpg"
+            image: "img/platos/papas-bravas.png"
         },
         "entrepanes-de-focaccia": {
             name: "Entrepanes de Focaccia",
-            description: "Jamón crudo, oliva, tomates cherry, queso holanda y queso crema con hierbas",
+            description: "Nuestra focaccia casera rellena con una combinación perfecta de sabores italianos que celebran el ritual del aperitivo.",
+            ingredients: ["Focaccia artesanal", "Jamón crudo", "Aceitunas", "Tomates cherry", "Queso holanda", "Queso crema", "Hierbas frescas"],
+            allergens: "Gluten, lácteos",
             price: "7.400",
             type: "Tapa caliente",
             icon: "🥖",
@@ -131,92 +135,126 @@ const restaurantConfig = {
         "lomito-ahumado-queso-fynbo-morrones-en-conserva-y-pesto-de-albahaca": {
             name: "Lomito Ahumado, Queso Fynbo, Morrones en Conserva y Pesto de Albahaca",
             price: "7.400",
-            description: "Combinación de lomito ahumado con quesos y vegetales.",
+            description: "Una combinación sofisticada que fusiona el ahumado delicado del lomito con la cremosidad del queso danés y el frescor del pesto artesanal.",
+            ingredients: ["Lomito ahumado", "Queso fynbo", "Morrones en conserva", "Pesto de albahaca casero", "Aceite de oliva"],
+            allergens: "Lácteos, frutos secos (piñones en pesto)",
             type: "Tapa caliente",
-            icon: "🥩"
+            icon: "🥩",
+            image: "img/platos/lomito-ahumado.png"
         },
         "langostinos-al-oporto": {
             name: "Langostinos al Oporto",
             price: "15.000",
-            description: "Langostinos salteados en salsa de oporto.",
+            description: "Un plato premium que celebra los sabores del mar con una exquisita reducción de vino oporto que realza la dulzura natural de los langostinos.",
+            ingredients: ["Langostinos frescos", "Vino oporto", "Manteca", "Ajo", "Perejil"],
+            allergens: "Crustáceos, lácteos, sulfitos (vino)",
+            portion: "Porción generosa",
             type: "Tapa caliente premium",
             icon: "🦐",
-            image: "img/platos/langostinos-al-oporto.jpg"
+            image: "img/platos/langostinos-al-oporto.png"
         },
         "duo-de-tortellinis-y-cresta-di-gallo-gratinados": {
             name: "Dúo de Tortellinis y Cresta di Gallo Gratinados",
             price: "8.800",
-            description: "Pasta rellena gratinada al horno.",
+            description: "Nuestras pastas artesanales rellenas, gratinadas al horno hasta lograr una textura dorada irresistible. La esencia de la tradición familiar.",
+            ingredients: ["Tortellinis caseros", "Cresta di gallo", "Salsa bechamel", "Quesos gratinados", "Nuez moscada"],
+            allergens: "Gluten, lácteos, huevo",
             type: "Tapa caliente",
             icon: "🍝",
-            image: "img/platos/duo-de-tortellinis-y-cresta-di-gallo-gratinados.jpg"
+            image: "img/platos/duo-de-tortellinis-y-cresta-di-gallo-gratinados.png"
         },
         "mejillones-media-valva-al-vino-blanco": {
             name: "Mejillones Media Valva al Vino Blanco",
             price: "12.000",
-            description: "Mejillones frescos cocidos en vino blanco.",
+            description: "Un clásico del aperitivo italiano que transporta al Mediterráneo con cada bocado. Cocidos suavemente para preservar su sabor marino.",
+            ingredients: ["Mejillones frescos", "Vino blanco", "Ajo", "Perejil", "Aceite de oliva", "Limón"],
+            allergens: "Moluscos, sulfitos (vino)",
             type: "Tapa caliente",
             icon: "🦪",
-            image: "img/platos/mejillones-media-valva-al-vino-blanco.jpg"
+            image: "img/platos/mejillones-media-valva-al-vino-blanco.png"
         },
         "camembert-graten-y-tomates-confitados": {
             name: "Camembert Gratén y Tomates Confitados",
             price: "12.000",
-            description: "Queso camembert gratinado con tomates confitados.",
+            description: "La cremosidad del camembert gratinado se encuentra con la dulzura de los tomates confitados en una experiencia sensorial única.",
+            ingredients: ["Queso camembert", "Tomates confitados", "Aceite de oliva", "Tomillo", "Romero", "Ajo"],
+            allergens: "Lácteos",
             type: "Tapa caliente",
             icon: "🧀",
-            image: "img/platos/camembert-graten-y-tomates-confitados.jpg"
+            image: "img/platos/camembert-graten-y-tomates-confitados.png"
         },
 
         // TAPAS FRÍAS
         "olivas-negras-picantes": {
             name: "Olivas Negras Picantes",
             price: "4.000",
-            description: "Aceitunas negras con un toque picante.",
+            description: "Aceitunas negras seleccionadas, marinadas con especias y un toque picante que realza su sabor mediterráneo. Perfectas para comenzar el aperitivo.",
+            ingredients: ["Aceitunas negras", "Aceite de oliva", "Ají", "Hierbas aromáticas"],
+            allergens: "Ninguno",
             type: "Tapa fría",
-            icon: "🫒"
+            icon: "🫒",
+            image: "img/platos/olivas-negras-picantes.png"
         },
         "champinones-en-escabeche": {
             name: "Champiñones en Escabeche",
             price: "7.000",
-            description: "Champiñones marinados en escabeche casero.",
+            description: "Champiñones frescos marinados en nuestro escabeche casero, con el balance perfecto entre acidez y especias. Una receta de tradición familiar.",
+            ingredients: ["Champiñones frescos", "Vinagre", "Aceite de oliva", "Ajo", "Laurel", "Pimentón"],
+            allergens: "Ninguno",
             type: "Tapa fría",
-            icon: "🍄"
+            icon: "🍄",
+            image: "img/platos/champinones-escabeche.png"
         },
         "plato-de-jamon-crudo": {
             name: "Plato de Jamón Crudo",
             price: "7.000",
-            description: "Finas lonchas de jamón crudo italiano.",
+            description: "Finas lonchas de jamón crudo italiano, curado con maestría. Un clásico del aperitivo que nunca falla, simple y exquisito.",
+            ingredients: ["Jamón crudo italiano premium"],
+            allergens: "Ninguno",
+            portion: "Porción generosa",
             type: "Tapa fría",
-            icon: "🥓"
+            icon: "🥓",
+            image: "img/platos/jamon-crudo.png"
         },
         "salame-de-oncativo-y-focaccia": {
             name: "Salame de Oncativo y Focaccia",
             price: "5.600",
-            description: "Salame artesanal con pan focaccia.",
+            description: "Salame artesanal de Oncativo, elaborado con tradición cordobesa, acompañado de nuestra focaccia casera recién horneada. Sabor local con alma italiana.",
+            ingredients: ["Salame de Oncativo artesanal", "Focaccia casera"],
+            allergens: "Gluten",
             type: "Tapa fría",
-            icon: "🥖"
+            icon: "🥖",
+            image: "img/platos/salame-focaccia.png"
         },
         "queso-marinado-y-tomates-cherrys": {
             name: "Queso Marinado y Tomates Cherrys",
             price: "5.600",
-            description: "Cubos de queso marinado con tomates cherry.",
+            description: "Cubos de queso marinado en aceite de oliva con hierbas, acompañados de tomates cherry frescos. Una combinación fresca y colorida.",
+            ingredients: ["Queso en cubos", "Aceite de oliva", "Hierbas aromáticas", "Tomates cherry"],
+            allergens: "Lácteos",
             type: "Tapa fría",
-            icon: "🧀"
+            icon: "🧀",
+            image: "img/platos/queso-marinado.png"
         },
         "duo-de-bruschettas": {
             name: "Dúo de Bruschettas",
-            description: "Jamón crudo y escabeche de mar",
+            description: "Dos versiones irresistibles sobre pan artesanal tostado: una con jamón crudo italiano y otra con escabeche de mar. El aperitivo perfecto.",
+            ingredients: ["Pan artesanal tostado", "Jamón crudo", "Escabeche de mar", "Aceite de oliva", "Ajo"],
+            allergens: "Gluten, pescado/mariscos",
             price: "6.500",
             type: "Tapa fría",
-            icon: "🍞"
+            icon: "🍞",
+            image: "img/platos/bruschettas.png"
         },
         "parmesano-con-pesto-de-albahaca": {
             name: "Parmesano con Pesto de Albahaca",
             price: "9.000",
-            description: "Queso parmesano con pesto casero.",
+            description: "Lascas de queso parmesano reggiano acompañadas de nuestro pesto de albahaca casero. Elaborado con amor y tradición, como en las cocinas italianas.",
+            ingredients: ["Queso parmesano reggiano", "Pesto de albahaca casero", "Piñones", "Aceite de oliva extra virgen"],
+            allergens: "Lácteos, frutos secos (piñones)",
             type: "Tapa fría",
-            icon: "🧀"
+            icon: "🧀",
+            image: "img/platos/parmesano-pesto.png"
         },
 
         // VINOS
@@ -225,78 +263,102 @@ const restaurantConfig = {
             description: "(Suave y frutado)",
             price: "4.500",
             type: "Vino tinto",
-            icon: "🍷"
+            icon: "🍷",
+            image: "img/platos/malbec-joven.png"
         },
         "cabernet": {
             name: "Cabernet",
             description: "(Estructurado y aterciopelado)",
             price: "4.500",
             type: "Vino tinto",
-            icon: "🍷"
+            icon: "🍷",
+            image: "img/platos/cabernet.png"
         },
         "sauvignon-blanc": {
             name: "Sauvignon Blanc",
             description: "(Aromático y fresco)",
             price: "4.500",
             type: "Vino blanco",
-            icon: "🍷"
+            icon: "🍷",
+            image: "img/platos/sauvignon-blanc.png"
         },
         "espumante-rosado": {
             name: "Espumante Rosado",
             description: "(Elegante y refrescante)",
             price: "4.500",
             type: "Espumante",
-            icon: "🥂"
+            icon: "🥂",
+            image: "img/platos/espumante-rosado.png"
         },
 
         // VERMUTS
         "rosso-clasico-con-soda-y-piel-de-naranja": {
             name: "Rosso Clásico con Soda y Piel de Naranja",
             price: "6.600",
+            description: "El vermut tradicional italiano, con su color rubí intenso, soda y una espiral de piel de naranja fresca.",
+            ingredients: ["Vermut rosso", "Soda", "Piel de naranja", "Hielo"],
             type: "Vermut",
-            icon: "🍹"
+            icon: "🍹",
+            image: "img/platos/rosso-clasico.png"
         },
         "bianco-seco-con-oliva-y-romero": {
             name: "Bianco Seco con Oliva y Romero",
             price: "6.600",
+            description: "Vermut blanco seco servido con aceitunas verdes y una ramita de romero. Un perfil aromático y sofisticado.",
+            ingredients: ["Vermut bianco", "Aceitunas verdes", "Romero fresco", "Hielo"],
             type: "Vermut",
-            icon: "🍹"
+            icon: "🍸",
+            image: "img/platos/bianco-seco.png"
         },
         "rosado-con-pomelo-y-menta": {
             name: "Rosado con Pomelo y Menta",
             price: "6.600",
+            description: "La frescura del vermut rosado combinada con el cítrico del pomelo y el aroma de la menta. Vibrante y delicioso.",
+            ingredients: ["Vermut rosado", "Rodaja de pomelo", "Menta fresca", "Hielo"],
             type: "Vermut",
-            icon: "🍹"
+            icon: "🍹",
+            image: "img/platos/rosado-pomelo.png"
         },
-        "bianco-con-tonica-y-limon": {
-            name: "Bianco con Tónica y Limón",
+        "bianco-con-tonica-limon-y-pepino": {
+            name: "Bianco con Tónica, Limón y Pepino",
             price: "6.600",
+            description: "Un twist refrescante: vermut blanco, agua tónica, rodajas de limón y láminas de pepino. Ideal para días de calor.",
+            ingredients: ["Vermut bianco", "Agua tónica", "Limón", "Pepino", "Hielo"],
             type: "Vermut",
-            icon: "🍹"
+            icon: "🍸",
+            image: "img/platos/bianco-tonica.png"
         },
 
         // SPRITZ
         "aperol-spritz": {
             name: "Aperol Spritz",
             price: "8.000",
+            description: "El clásico italiano por excelencia: Aperol, prosecco y soda, con su característico color naranja vibrante.",
+            ingredients: ["Aperol", "Prosecco", "Soda", "Naranja", "Hielo"],
             type: "Spritz",
             icon: "🍊"
         },
         "campari-spritz": {
             name: "Campari Spritz",
             price: "8.000",
+            description: "Versión más intensa con Campari, para quienes buscan un sabor más amargo y sofisticado.",
+            ingredients: ["Campari", "Prosecco", "Soda", "Naranja", "Hielo"],
             type: "Spritz",
             icon: "🍹"
         },
         "cynar-spritz": {
             name: "Cynar Spritz",
             price: "8.000",
+            description: "Spritz con Cynar, el licor de alcachofa italiano, una opción única y aromática.",
+            ingredients: ["Cynar", "Prosecco", "Soda", "Naranja", "Hielo"],
             type: "Spritz",
             icon: "🍹"
         },
         "bianco-spritz": {
             name: "Bianco Spritz",
             price: "8.000",
+            description: "Versión suave y delicada con vermut blanco, ideal para paladares que prefieren sabores más sutiles.",
+            ingredients: ["Vermut bianco", "Prosecco", "Soda", "Limón", "Hielo"],
             type: "Spritz",
             icon: "🍹"
         },
@@ -305,24 +367,30 @@ const restaurantConfig = {
         "limonada-con-menta": {
             name: "Limonada con Menta",
             price: "4.000",
+            description: "Limonada casera refrescante con hojas de menta fresca, perfecta para acompañar el aperitivo.",
+            ingredients: ["Limón", "Menta fresca", "Azúcar", "Agua", "Hielo"],
             type: "Bebida refrescante",
             icon: "🍋"
         },
         "jugos-de-frutas": {
             name: "Jugos de Frutas",
             price: "4.000",
+            description: "Jugos naturales de frutas frescas de estación.",
+            ingredients: ["Frutas frescas de estación"],
             type: "Bebida refrescante",
             icon: "🧃"
         },
         "aguas-saborizadas": {
             name: "Aguas Saborizadas",
             price: "3.300",
+            description: "Aguas saborizadas refrescantes, opciones variadas.",
             type: "Bebida refrescante",
             icon: "💧"
         },
         "gaseosas": {
             name: "Gaseosas",
             price: "3.300",
+            description: "Gaseosas clásicas para acompañar.",
             type: "Bebida refrescante",
             icon: "🥤"
         }
