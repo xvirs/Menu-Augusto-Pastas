@@ -17,10 +17,10 @@ const restaurantConfig = {
             }
         },
         images: {
-            logo: "img/logo.webp",
+            logo: "img/logo.png",
             favicon: "img/favicon.svg",
-            decorationLeft: "img/dibujo2.webp",
-            decorationRight: "img/dibujo1.webp"
+            decorationLeft: "img/dibujo2.png",
+            decorationRight: "img/dibujo1.png"
         },
         theme: {
             primaryColor: "#C62828", // Rojo de la marca
