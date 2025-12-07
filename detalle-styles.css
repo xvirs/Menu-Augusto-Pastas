@@ -470,3 +470,26 @@
     line-height: 1.4;
     font-style: italic;
 }
+
+.pairing-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.pairing-label {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+    font-family: var(--font-body);
+}
+
+.pairing-content {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--text-color);
+    font-style: italic;
+    line-height: 1.4;
+}
