@@ -445,3 +445,28 @@
         transform: translateY(0);
     }
 }
+/* Dish Pairing Section */
+.dish-pairing {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: white;
+    border: 1px dashed var(--primary-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: start;
+    gap: 0.8rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.pairing-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.pairing-text {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: var(--text-color);
+    line-height: 1.4;
+    font-style: italic;
+}

@@ -144,6 +144,26 @@ function loadDishDetails(slug) {
         imageIcon.textContent = dish.icon;
     }
 
+    // Pairing
+    const pairingContainer = document.querySelector('.dish-pairing');
+    if (dish.pairing) {
+        if (!pairingContainer) {
+            // Create container if it doesn't exist (it should be in HTML ideally, but we can inject it)
+            // Let's rely on HTML structure update or inject deeply.
+            // Better strategy: Inject HTML into an existing container or create it dynamically after description.
+            const descContainer = document.getElementById('dishDescription');
+            const pairingDiv = document.createElement('div');
+            pairingDiv.className = 'dish-pairing';
+            pairingDiv.innerHTML = `<span class="pairing-icon">🍷</span> <span class="pairing-text">${dish.pairing}</span>`;
+            descContainer.parentNode.insertBefore(pairingDiv, descContainer.nextSibling);
+        } else {
+            pairingContainer.innerHTML = `<span class="pairing-icon">🍷</span> <span class="pairing-text">${dish.pairing}</span>`;
+            pairingContainer.style.display = 'flex';
+        }
+    } else if (pairingContainer) {
+        pairingContainer.style.display = 'none';
+    }
+
     const ingredientsList = document.getElementById('ingredientsList');
     if (ingredientsList) {
         ingredientsList.innerHTML = '';

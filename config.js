@@ -46,7 +46,6 @@ const restaurantConfig = {
             items: [
                 "papas-bravas",
                 "entrepanes-de-focaccia",
-                "lomito-ahumado-queso-fynbo-morrones-en-conserva-y-pesto-de-albahaca",
                 "langostinos-al-oporto",
                 "duo-de-tortellinis-y-cresta-di-gallo-gratinados",
                 "mejillones-media-valva-al-vino-blanco",
@@ -119,29 +118,22 @@ const restaurantConfig = {
             ingredients: ["Papas", "Salsa brava picante", "Aceite de oliva", "Pimentón"],
             allergens: "Puede contener trazas de gluten",
             type: "Tapa caliente",
+            pairing: "Vermut Rosso: El dulzor equilibra el picante.",
             icon: "🥔",
             image: "img/platos/papas-bravas.webp"
         },
         "entrepanes-de-focaccia": {
             name: "Entrepanes de Focaccia",
-            description: "Nuestra focaccia casera rellena con una combinación perfecta de sabores italianos que celebran el ritual del aperitivo.",
-            ingredients: ["Focaccia artesanal", "Jamón crudo", "Aceitunas", "Tomates cherry", "Queso holanda", "Queso crema", "Hierbas frescas"],
-            allergens: "Gluten, lácteos",
+            description: "Nuestra focaccia casera rellena. Elegí tu variedad: 1) Jamón Crudo, Queso Holanda, Aceitunas y Cherrys. 2) Lomito Ahumado, Queso Fynbo, Morrones y Pesto.",
+            ingredients: ["Focaccia artesanal", "Opción A: Jamón Crudo + Queso Holanda", "Opción B: Lomito Ahumado + Queso Fynbo"],
+            allergens: "Gluten, lácteos, frutos secos (opción pesto)",
             price: "7.400",
             type: "Tapa caliente",
+            pairing: "Aperol Spritz (Ideal para ambas opciones) o Cabernet (Sugerido para Lomito).",
             icon: "🥖",
             image: "img/platos/entrepanes-de-focaccia.webp"
         },
-        "lomito-ahumado-queso-fynbo-morrones-en-conserva-y-pesto-de-albahaca": {
-            name: "Lomito Ahumado, Queso Fynbo, Morrones en Conserva y Pesto de Albahaca",
-            price: "7.400",
-            description: "Una combinación sofisticada que fusiona el ahumado delicado del lomito con la cremosidad del queso danés y el frescor del pesto artesanal.",
-            ingredients: ["Lomito ahumado", "Queso fynbo", "Morrones en conserva", "Pesto de albahaca casero", "Aceite de oliva"],
-            allergens: "Lácteos, frutos secos (piñones en pesto)",
-            type: "Tapa caliente",
-            icon: "🥩",
-            image: "img/platos/lomito-ahumado.webp"
-        },
+
         "langostinos-al-oporto": {
             name: "Langostinos al Oporto",
             price: "15.000",
@@ -150,6 +142,7 @@ const restaurantConfig = {
             allergens: "Crustáceos, lácteos, sulfitos (vino)",
             portion: "Porción generosa",
             type: "Tapa caliente premium",
+            pairing: "Sauvignon Blanc: Acidez ideal para mariscos.",
             icon: "🦐",
             image: "img/platos/langostinos-al-oporto.webp"
         },
@@ -160,6 +153,7 @@ const restaurantConfig = {
             ingredients: ["Tortellinis caseros", "Cresta di gallo", "Salsa bechamel", "Quesos gratinados", "Nuez moscada"],
             allergens: "Gluten, lácteos, huevo",
             type: "Tapa caliente",
+            pairing: "Malbec Joven: Frutado, corta la gratina.",
             icon: "🍝",
             image: "img/platos/duo-de-tortellinis-y-cresta-di-gallo-gratinados.webp"
         },
@@ -170,6 +164,7 @@ const restaurantConfig = {
             ingredients: ["Mejillones frescos", "Vino blanco", "Ajo", "Perejil", "Aceite de oliva", "Limón"],
             allergens: "Moluscos, sulfitos (vino)",
             type: "Tapa caliente",
+            pairing: "Bianco Spritz: Notas cítricas que resaltan el mar.",
             icon: "🦪",
             image: "img/platos/mejillones-media-valva-al-vino-blanco.webp"
         },
@@ -180,6 +175,7 @@ const restaurantConfig = {
             ingredients: ["Queso camembert", "Tomates confitados", "Aceite de oliva", "Tomillo", "Romero", "Ajo"],
             allergens: "Lácteos",
             type: "Tapa caliente",
+            pairing: "Espumante Rosado: Burbujas limpian la cremosidad.",
             icon: "🧀",
             image: "img/platos/camembert-graten-y-tomates-confitados.webp"
         },
@@ -192,6 +188,7 @@ const restaurantConfig = {
             ingredients: ["Aceitunas negras", "Aceite de oliva", "Ají", "Hierbas aromáticas"],
             allergens: "Ninguno",
             type: "Tapa fría",
+            pairing: "Vermut Rosso: Clásico maridaje por contraste.",
             icon: "🫒",
             image: "img/platos/olivas-negras-picantes.webp"
         },
@@ -202,6 +199,7 @@ const restaurantConfig = {
             ingredients: ["Champiñones frescos", "Vinagre", "Aceite de oliva", "Ajo", "Laurel", "Pimentón"],
             allergens: "Ninguno",
             type: "Tapa fría",
+            pairing: "Bianco con Tónica: Frescura herbal complementaria.",
             icon: "🍄",
             image: "img/platos/champinones-escabeche.webp"
         },
@@ -213,6 +211,7 @@ const restaurantConfig = {
             allergens: "Ninguno",
             portion: "Porción generosa",
             type: "Tapa fría",
+            pairing: "Malbec Joven: Taninos suaves para la curación.",
             icon: "🥓",
             image: "img/platos/jamon-crudo.webp"
         },
@@ -223,6 +222,7 @@ const restaurantConfig = {
             ingredients: ["Salame de Oncativo artesanal", "Focaccia casera"],
             allergens: "Gluten",
             type: "Tapa fría",
+            pairing: "Vermut Rosso con Soda: Corta la grasa del embutido.",
             icon: "🥖",
             image: "img/platos/salame-focaccia.webp"
         },
@@ -233,6 +233,7 @@ const restaurantConfig = {
             ingredients: ["Queso en cubos", "Aceite de oliva", "Hierbas aromáticas", "Tomates cherry"],
             allergens: "Lácteos",
             type: "Tapa fría",
+            pairing: "Sauvignon Blanc: Realza las hierbas y acidez.",
             icon: "🧀",
             image: "img/platos/queso-marinado.webp"
         },
@@ -243,6 +244,7 @@ const restaurantConfig = {
             allergens: "Gluten, pescado/mariscos",
             price: "6.500",
             type: "Tapa fría",
+            pairing: "Campari Spritz: Amargor que limpia el paladar.",
             icon: "🍞",
             image: "img/platos/bruschettas.webp"
         },
@@ -253,6 +255,7 @@ const restaurantConfig = {
             ingredients: ["Queso parmesano reggiano", "Pesto de albahaca casero", "Piñones", "Aceite de oliva extra virgen"],
             allergens: "Lácteos, frutos secos (piñones)",
             type: "Tapa fría",
+            pairing: "Bianco Seco: Notas secas para el queso intenso.",
             icon: "🧀",
             image: "img/platos/parmesano-pesto.webp"
         },
