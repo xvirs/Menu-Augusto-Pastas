@@ -17,10 +17,10 @@ const restaurantConfig = {
             }
         },
         images: {
-            logo: "img/logo.png",
+            logo: "img/logo.webp",
             favicon: "img/favicon.svg",
-            decorationLeft: "img/dibujo2.png",
-            decorationRight: "img/dibujo1.png"
+            decorationLeft: "img/dibujo2.webp",
+            decorationRight: "img/dibujo1.webp"
         },
         theme: {
             primaryColor: "#C62828", // Rojo de la marca
@@ -120,7 +120,7 @@ const restaurantConfig = {
             allergens: "Puede contener trazas de gluten",
             type: "Tapa caliente",
             icon: "🥔",
-            image: "img/platos/papas-bravas.png"
+            image: "img/platos/papas-bravas.webp"
         },
         "entrepanes-de-focaccia": {
             name: "Entrepanes de Focaccia",
@@ -130,7 +130,7 @@ const restaurantConfig = {
             price: "7.400",
             type: "Tapa caliente",
             icon: "🥖",
-            image: "img/platos/entrepanes-de-focaccia.png"
+            image: "img/platos/entrepanes-de-focaccia.webp"
         },
         "lomito-ahumado-queso-fynbo-morrones-en-conserva-y-pesto-de-albahaca": {
             name: "Lomito Ahumado, Queso Fynbo, Morrones en Conserva y Pesto de Albahaca",
@@ -140,7 +140,7 @@ const restaurantConfig = {
             allergens: "Lácteos, frutos secos (piñones en pesto)",
             type: "Tapa caliente",
             icon: "🥩",
-            image: "img/platos/lomito-ahumado.png"
+            image: "img/platos/lomito-ahumado.webp"
         },
         "langostinos-al-oporto": {
             name: "Langostinos al Oporto",
@@ -151,7 +151,7 @@ const restaurantConfig = {
             portion: "Porción generosa",
             type: "Tapa caliente premium",
             icon: "🦐",
-            image: "img/platos/langostinos-al-oporto.png"
+            image: "img/platos/langostinos-al-oporto.webp"
         },
         "duo-de-tortellinis-y-cresta-di-gallo-gratinados": {
             name: "Dúo de Tortellinis y Cresta di Gallo Gratinados",
@@ -161,7 +161,7 @@ const restaurantConfig = {
             allergens: "Gluten, lácteos, huevo",
             type: "Tapa caliente",
             icon: "🍝",
-            image: "img/platos/duo-de-tortellinis-y-cresta-di-gallo-gratinados.png"
+            image: "img/platos/duo-de-tortellinis-y-cresta-di-gallo-gratinados.webp"
         },
         "mejillones-media-valva-al-vino-blanco": {
             name: "Mejillones Media Valva al Vino Blanco",
@@ -171,7 +171,7 @@ const restaurantConfig = {
             allergens: "Moluscos, sulfitos (vino)",
             type: "Tapa caliente",
             icon: "🦪",
-            image: "img/platos/mejillones-media-valva-al-vino-blanco.png"
+            image: "img/platos/mejillones-media-valva-al-vino-blanco.webp"
         },
         "camembert-graten-y-tomates-confitados": {
             name: "Camembert Gratén y Tomates Confitados",
@@ -181,7 +181,7 @@ const restaurantConfig = {
             allergens: "Lácteos",
             type: "Tapa caliente",
             icon: "🧀",
-            image: "img/platos/camembert-graten-y-tomates-confitados.png"
+            image: "img/platos/camembert-graten-y-tomates-confitados.webp"
         },
 
         // TAPAS FRÍAS
@@ -193,7 +193,7 @@ const restaurantConfig = {
             allergens: "Ninguno",
             type: "Tapa fría",
             icon: "🫒",
-            image: "img/platos/olivas-negras-picantes.png"
+            image: "img/platos/olivas-negras-picantes.webp"
         },
         "champinones-en-escabeche": {
             name: "Champiñones en Escabeche",
@@ -203,7 +203,7 @@ const restaurantConfig = {
             allergens: "Ninguno",
             type: "Tapa fría",
             icon: "🍄",
-            image: "img/platos/champinones-escabeche.png"
+            image: "img/platos/champinones-escabeche.webp"
         },
         "plato-de-jamon-crudo": {
             name: "Plato de Jamón Crudo",
@@ -214,7 +214,7 @@ const restaurantConfig = {
             portion: "Porción generosa",
             type: "Tapa fría",
             icon: "🥓",
-            image: "img/platos/jamon-crudo.png"
+            image: "img/platos/jamon-crudo.webp"
         },
         "salame-de-oncativo-y-focaccia": {
             name: "Salame de Oncativo y Focaccia",
@@ -224,7 +224,7 @@ const restaurantConfig = {
             allergens: "Gluten",
             type: "Tapa fría",
             icon: "🥖",
-            image: "img/platos/salame-focaccia.png"
+            image: "img/platos/salame-focaccia.webp"
         },
         "queso-marinado-y-tomates-cherrys": {
             name: "Queso Marinado y Tomates Cherrys",
@@ -234,7 +234,7 @@ const restaurantConfig = {
             allergens: "Lácteos",
             type: "Tapa fría",
             icon: "🧀",
-            image: "img/platos/queso-marinado.png"
+            image: "img/platos/queso-marinado.webp"
         },
         "duo-de-bruschettas": {
             name: "Dúo de Bruschettas",
@@ -244,7 +244,7 @@ const restaurantConfig = {
             price: "6.500",
             type: "Tapa fría",
             icon: "🍞",
-            image: "img/platos/bruschettas.png"
+            image: "img/platos/bruschettas.webp"
         },
         "parmesano-con-pesto-de-albahaca": {
             name: "Parmesano con Pesto de Albahaca",
@@ -254,7 +254,7 @@ const restaurantConfig = {
             allergens: "Lácteos, frutos secos (piñones)",
             type: "Tapa fría",
             icon: "🧀",
-            image: "img/platos/parmesano-pesto.png"
+            image: "img/platos/parmesano-pesto.webp"
         },
 
         // VINOS
@@ -264,7 +264,7 @@ const restaurantConfig = {
             price: "4.500",
             type: "Vino tinto",
             icon: "🍷",
-            image: "img/platos/malbec-joven.png"
+            image: "img/platos/malbec-joven.webp"
         },
         "cabernet": {
             name: "Cabernet",
@@ -272,7 +272,7 @@ const restaurantConfig = {
             price: "4.500",
             type: "Vino tinto",
             icon: "🍷",
-            image: "img/platos/cabernet.png"
+            image: "img/platos/cabernet.webp"
         },
         "sauvignon-blanc": {
             name: "Sauvignon Blanc",
@@ -280,7 +280,7 @@ const restaurantConfig = {
             price: "4.500",
             type: "Vino blanco",
             icon: "🍷",
-            image: "img/platos/sauvignon-blanc.png"
+            image: "img/platos/sauvignon-blanc.webp"
         },
         "espumante-rosado": {
             name: "Espumante Rosado",
@@ -288,7 +288,7 @@ const restaurantConfig = {
             price: "4.500",
             type: "Espumante",
             icon: "🥂",
-            image: "img/platos/espumante-rosado.png"
+            image: "img/platos/espumante-rosado.webp"
         },
 
         // VERMUTS
@@ -299,7 +299,7 @@ const restaurantConfig = {
             ingredients: ["Vermut rosso", "Soda", "Piel de naranja", "Hielo"],
             type: "Vermut",
             icon: "🍹",
-            image: "img/platos/rosso-clasico.png"
+            image: "img/platos/rosso-clasico.webp"
         },
         "bianco-seco-con-oliva-y-romero": {
             name: "Bianco Seco con Oliva y Romero",
@@ -308,7 +308,7 @@ const restaurantConfig = {
             ingredients: ["Vermut bianco", "Aceitunas verdes", "Romero fresco", "Hielo"],
             type: "Vermut",
             icon: "🍸",
-            image: "img/platos/bianco-seco.png"
+            image: "img/platos/bianco-seco.webp"
         },
         "rosado-con-pomelo-y-menta": {
             name: "Rosado con Pomelo y Menta",
@@ -317,7 +317,7 @@ const restaurantConfig = {
             ingredients: ["Vermut rosado", "Rodaja de pomelo", "Menta fresca", "Hielo"],
             type: "Vermut",
             icon: "🍹",
-            image: "img/platos/rosado-pomelo.png"
+            image: "img/platos/rosado-pomelo.webp"
         },
         "bianco-con-tonica-limon-y-pepino": {
             name: "Bianco con Tónica, Limón y Pepino",
@@ -326,7 +326,7 @@ const restaurantConfig = {
             ingredients: ["Vermut bianco", "Agua tónica", "Limón", "Pepino", "Hielo"],
             type: "Vermut",
             icon: "🍸",
-            image: "img/platos/bianco-tonica.png"
+            image: "img/platos/bianco-tonica.webp"
         },
 
         // SPRITZ
