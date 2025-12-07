@@ -154,10 +154,10 @@ function loadDishDetails(slug) {
             const descContainer = document.getElementById('dishDescription');
             const pairingDiv = document.createElement('div');
             pairingDiv.className = 'dish-pairing';
-            pairingDiv.innerHTML = `<span class="pairing-icon">🍷</span> <span class="pairing-text">${dish.pairing}</span>`;
+            pairingDiv.innerHTML = `<span class="pairing-icon">🍷</span> <span class="pairing-text"><strong>Maridaje Sugerido:</strong> ${dish.pairing}</span>`;
             descContainer.parentNode.insertBefore(pairingDiv, descContainer.nextSibling);
         } else {
-            pairingContainer.innerHTML = `<span class="pairing-icon">🍷</span> <span class="pairing-text">${dish.pairing}</span>`;
+            pairingContainer.innerHTML = `<span class="pairing-icon">🍷</span> <span class="pairing-text"><strong>Maridaje Sugerido:</strong> ${dish.pairing}</span>`;
             pairingContainer.style.display = 'flex';
         }
     } else if (pairingContainer) {
