@@ -1,3 +1,8 @@
+function getPath(relativePath) {
+    const base = window.BASE_PATH || '';
+    return base + relativePath;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof restaurantConfig === 'undefined') {
         console.error('Configuration file not loaded');
@@ -52,13 +57,13 @@ function renderHeader() {
 
     header.innerHTML = `
         <div class="header-decoration header-decoration-left">
-            <img src="${info.images.decorationLeft}" alt="Decoración izquierda" class="decoration-img">
+            <img src="${getPath(info.images.decorationLeft)}" alt="Decoración izquierda" class="decoration-img">
         </div>
         <div class="header-decoration header-decoration-right">
-            <img src="${info.images.decorationRight}" alt="Decoración derecha" class="decoration-img">
+            <img src="${getPath(info.images.decorationRight)}" alt="Decoración derecha" class="decoration-img">
         </div>
         <div class="header-content">
-            <img src="${info.images.logo}" alt="${info.name} Logo" class="logo">
+            <img src="${getPath(info.images.logo)}" alt="${info.name} Logo" class="logo">
             <h1>${info.name.toUpperCase()}</h1>
             <p class="subtitle">${info.subtitle}</p>
             ${renderSocialLink(info.social.instagram)}
@@ -138,7 +143,7 @@ function loadDishDetails(slug) {
 
     if (dish.image) {
         imagePlaceholder.classList.add('has-image');
-        imagePlaceholder.style.backgroundImage = `url('${dish.image}')`;
+        imagePlaceholder.style.backgroundImage = `url('${getPath(dish.image)}')`;
         imageIcon.style.display = 'none';
     } else if (dish.icon) {
         imageIcon.textContent = dish.icon;
