@@ -6,18 +6,17 @@ Sistema de menús digitales estáticos que permite gestionar múltiples clientes
 
 ```
 /
-├── index.html              ← Landing page con lista de clientes
-├── menus/                  ← CARPETA DE CLIENTES
+├── index.html                      ← Landing page con lista de clientes
+├── menus/                          ← CARPETA DE CLIENTES
+│   ├── _template.js                ← Template para crear nuevos clientes
 │   ├── augusto/
-│   │   ├── index.html      ← Menú de Augusto
-│   │   └── detalle.html    ← Detalle de platos
+│   │   ├── config.js               ← Configuración de Augusto
+│   │   ├── index.html
+│   │   └── detalle.html
 │   └── pizzeria-don-tito/
-│       ├── index.html      ← Menú de Don Tito
-│       └── detalle.html    ← Detalle de platos
-├── configs/                ← CONFIGURACIONES
-│   ├── augusto.js
-│   ├── pizzeria-don-tito.js
-│   └── _template.js
+│       ├── config.js               ← Configuración de Don Tito
+│       ├── index.html
+│       └── detalle.html
 ├── img/
 │   └── platos/
 ├── styles.css
@@ -35,7 +34,7 @@ Sistema de menús digitales estáticos que permite gestionar múltiples clientes
 | Augusto | `tudominio.com/menus/augusto/` |
 | Don Tito | `tudominio.com/menus/pizzeria-don-tito/` |
 
-Cada cliente tiene su URL limpia y permanente. No hay redirects.
+Cada cliente tiene su URL limpia y permanente.
 
 ---
 
@@ -43,9 +42,18 @@ Cada cliente tiene su URL limpia y permanente. No hay redirects.
 
 ## Al Crear un Nuevo Cliente
 
-### Paso 1: Crear configuración
+### Paso 1: Crear carpeta del cliente
 
-Archivo: `configs/nombrecliente.js`
+Crear carpeta: `menus/nombrecliente/`
+
+Dentro de esa carpeta crear 3 archivos:
+- `config.js` ← Configuración del cliente
+- `index.html` ← Página del menú
+- `detalle.html` ← Página de detalle de platos
+
+### Paso 2: Crear config.js
+
+Archivo: `menus/nombrecliente/config.js`
 
 ```javascript
 const restaurantConfig = {
@@ -100,11 +108,9 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 ```
 
-### Paso 2: Crear carpeta del cliente
+### Paso 3: Crear index.html
 
-Crear: `menus/nombrecliente/`
-
-#### index.html
+Archivo: `menus/nombrecliente/index.html`
 
 ```html
 <!DOCTYPE html>
@@ -131,13 +137,15 @@ Crear: `menus/nombrecliente/`
         window.CURRENT_CLIENT = 'nombrecliente';
         window.BASE_PATH = '../../';
     </script>
-    <script src="../../configs/nombrecliente.js"></script>
+    <script src="./config.js"></script>
     <script src="../../script.js"></script>
 </body>
 </html>
 ```
 
-#### detalle.html
+### Paso 4: Crear detalle.html
+
+Archivo: `menus/nombrecliente/detalle.html`
 
 ```html
 <!DOCTYPE html>
@@ -195,15 +203,15 @@ Crear: `menus/nombrecliente/`
         window.CURRENT_CLIENT = 'nombrecliente';
         window.BASE_PATH = '../../';
     </script>
-    <script src="../../configs/nombrecliente.js"></script>
+    <script src="./config.js"></script>
     <script src="../../detalle.js"></script>
 </body>
 </html>
 ```
 
-### Paso 3: Agregar a landing page
+### Paso 5: Agregar a landing page
 
-Editar `index.html` raíz, agregar en `.clients`:
+Editar `index.html` de la raíz, agregar en `.clients`:
 
 ```html
 <a href="menus/nombrecliente/" class="client-card">
@@ -212,20 +220,30 @@ Editar `index.html` raíz, agregar en `.clients`:
 </a>
 ```
 
+---
+
+## Resumen: Archivos a Crear por Cliente
+
+```
+menus/nombrecliente/
+├── config.js       ← Datos del restaurante (copiar de _template.js)
+├── index.html      ← Página del menú
+└── detalle.html    ← Página de detalle
+```
+
 ## Reglas Importantes
 
 1. **NO modificar** `script.js`, `detalle.js` ni estilos CSS
-2. **SOLO crear** archivos en `/configs/` y `/menus/nombrecliente/`
-3. El slug del cliente debe ser **lowercase con guiones**
+2. **SOLO crear** archivos dentro de `/menus/nombrecliente/`
+3. El slug del cliente debe ser **lowercase con guiones** (ej: `cafe-central`)
 4. Los precios van como **string** con formato "X.XXX"
-5. Cambiar `nombrecliente` por el slug real en los 4 lugares:
-   - `window.CURRENT_CLIENT`
-   - `<script src="../../configs/nombrecliente.js">`
-   - (en ambos HTML: index.html y detalle.html)
+5. Cambiar `nombrecliente` en 2 lugares de cada HTML:
+   - `window.CURRENT_CLIENT = 'nombrecliente'`
+6. El config se carga desde la misma carpeta: `./config.js`
 
 ## Clientes Activos
 
-| Cliente | Config | URL |
-|---------|--------|-----|
-| La Veredita de Augusto | `configs/augusto.js` | `/menus/augusto/` |
-| Pizzería Don Tito | `configs/pizzeria-don-tito.js` | `/menus/pizzeria-don-tito/` |
+| Cliente | Carpeta | URL |
+|---------|---------|-----|
+| La Veredita de Augusto | `menus/augusto/` | `/menus/augusto/` |
+| Pizzería Don Tito | `menus/pizzeria-don-tito/` | `/menus/pizzeria-don-tito/` |
