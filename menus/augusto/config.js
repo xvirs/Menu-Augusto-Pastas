@@ -85,7 +85,7 @@ const restaurantConfig = {
                         "rosso-clasico-con-soda-y-piel-de-naranja",
                         "bianco-seco-con-oliva-y-romero",
                         "rosado-con-pomelo-y-menta",
-                        "bianco-con-tonica-y-limon"
+                        "bianco-con-tonica-limon-y-pepino"
                     ]
                 },
                 {

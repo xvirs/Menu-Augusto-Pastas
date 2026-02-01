@@ -1,4 +1,9 @@
 // ===== UTILITIES =====
+function getPath(relativePath) {
+    const base = window.BASE_PATH || '';
+    return base + relativePath;
+}
+
 function generateSlug(name) {
     return name
         .toLowerCase()
@@ -61,11 +66,11 @@ const App = {
         // Update OG tags
         this.setMetaProperty('og:title', `${info.name} - ${info.location} | Menú Digital`);
         this.setMetaProperty('og:description', info.description);
-        this.setMetaProperty('og:image', info.images.logo);
+        this.setMetaProperty('og:image', getPath(info.images.logo));
 
         // Update Favicon
         const favicon = document.querySelector('link[rel="icon"]');
-        if (favicon) favicon.href = info.images.favicon;
+        if (favicon) favicon.href = getPath(info.images.favicon);
     },
 
     setMeta(name, content) {
@@ -94,13 +99,13 @@ const App = {
 
         header.innerHTML = `
             <div class="header-decoration header-decoration-left">
-                <img src="${info.images.decorationLeft}" alt="Decoración izquierda" class="decoration-img">
+                <img src="${getPath(info.images.decorationLeft)}" alt="Decoración izquierda" class="decoration-img">
             </div>
             <div class="header-decoration header-decoration-right">
-                <img src="${info.images.decorationRight}" alt="Decoración derecha" class="decoration-img">
+                <img src="${getPath(info.images.decorationRight)}" alt="Decoración derecha" class="decoration-img">
             </div>
             <div class="header-content">
-                <img src="${info.images.logo}" alt="${info.name} Logo" class="logo">
+                <img src="${getPath(info.images.logo)}" alt="${info.name} Logo" class="logo">
                 <h1>${info.name.toUpperCase()}</h1>
                 <p class="subtitle">${info.subtitle}</p>
                 ${this.renderSocialLink(info.social.instagram)}

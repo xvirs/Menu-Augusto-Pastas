@@ -7,26 +7,19 @@
     <title>Detalle del Plato | Menú Digital</title>
     <meta name="description" content="Información detallada del plato">
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Detalle del Plato">
     <meta property="og:description" content="Información detallada del plato">
     <meta property="og:image" content="">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="">
-
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="detalle-styles.css">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../detalle-styles.css">
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="header" id="detailHeader">
-        <!-- Content injected by JS -->
-    </header>
+    <header class="header" id="detailHeader"></header>
 
-    <!-- Main Content -->
     <main class="detail-content">
         <div class="detail-container">
             <button class="back-button" onclick="window.history.back()">
@@ -78,13 +71,14 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer" id="detailFooter">
-        <!-- Content injected by JS -->
-    </footer>
+    <footer class="footer" id="detailFooter"></footer>
 
-    <script src="config.js?v=7"></script>
-    <script src="detalle.js"></script>
+    <script>
+        window.CURRENT_CLIENT = 'augusto';
+        window.BASE_PATH = '../../';
+    </script>
+    <script src="./config.js"></script>
+    <script src="../../detalle.js"></script>
 </body>
 
 </html>
